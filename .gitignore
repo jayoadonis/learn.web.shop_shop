@@ -1,0 +1,12 @@
+/.vs/
+/.vscode/
+/.idea/
+
+/build/
+/vendor/
+
+
+.env.*
+!.env.public
+
+composer.lock

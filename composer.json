@@ -1,0 +1,16 @@
+{
+    "name": "learn.web/shop-shop",
+    "description": "A very simple e-commerce web app, however, it implemented a well defined project structure",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "LearnWeb\\ShopShop\\": "src/main/php/learn/web/shop_shop"
+        }
+    },
+    "authors": [{
+        "name": "jayoadonis",
+        "email": "jayo.adonisraphael@gmail.com"
+    }],
+    "require": {}
+}
