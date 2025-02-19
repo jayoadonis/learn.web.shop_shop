@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true" verbose="true">
+    <testsuites>
+        <testsuite name="Test: learn.web.shop_shop">
+            <directory>
+                src/test/php/learn/web/shop_shop/test
+            </directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

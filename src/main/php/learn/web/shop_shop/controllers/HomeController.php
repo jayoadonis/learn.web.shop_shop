@@ -30,7 +30,6 @@ class HomeController extends Controller {
 
         $homeViewRendered = (new HomeView($this))->render();
 
-
         ob_start();
         ?>
         

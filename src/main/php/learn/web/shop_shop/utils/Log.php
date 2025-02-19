@@ -12,6 +12,7 @@ class Log extends ObjectI
     public static function log(LogType $log_type, string $msg, null|string $log_file_path = null): void
     {
 
+        date_default_timezone_set("Asia/Manila");
         $timestamp = date("Y-m-d h:i:s A");
         
         ob_start();

@@ -3,6 +3,9 @@
     "description": "A very simple e-commerce web app, however, it implemented a well defined project structure",
     "type": "project",
     "license": "MIT",
+    "scripts": {
+        "test": "vendor/bin/phpunit --configuration phpunit.xml"
+    },
     "autoload": {
         "psr-4": {
             "learn\\web\\shop_shop\\": "src/main/php/learn/web/shop_shop"
@@ -12,7 +15,11 @@
         "name": "jayoadonis",
         "email": "jayo.adonisraphael@gmail.com"
     }],
+    "require": {
+        "php": ">=8.0"
+    },
     "require-dev": {
-        "vimeo/psalm": "5.17"
+        "vimeo/psalm": "5.17",
+        "phpunit/phpunit": "^10.5"
     }
 }
