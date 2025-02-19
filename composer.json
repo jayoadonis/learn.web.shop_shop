@@ -5,12 +5,14 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "LearnWeb\\ShopShop\\": "src/main/php/learn/web/shop_shop"
+            "learn\\web\\shop_shop\\": "src/main/php/learn/web/shop_shop"
         }
     },
     "authors": [{
         "name": "jayoadonis",
         "email": "jayo.adonisraphael@gmail.com"
     }],
-    "require": {}
+    "require-dev": {
+        "vimeo/psalm": "5.17"
+    }
 }

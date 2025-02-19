@@ -13,7 +13,7 @@ class ObjectI {
 
     public function hashCode(): int {
 
-        return hexdec( \spl_object_hash($this) );
+        return crc32( \spl_object_hash($this) );
     }
 
     /**

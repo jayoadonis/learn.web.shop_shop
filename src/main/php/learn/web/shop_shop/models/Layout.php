@@ -3,20 +3,38 @@ declare(strict_types=1);
 
 namespace learn\web\shop_shop\models;
 
+use learn\web\shop_shop\models\routes\RouteData;
+
 abstract class Layout extends ObjectI implements IRenderer {
 
     public string $title;
 
-    public IRenderer|string|false $outlet = false;
+    //REM: [TODO] .|. Encapsulate this properly.
+    protected IRenderer|string|false $outlet = false;
+
+    //REM: [TODO] .|. Encapsulate this properly.
     /**
      * @var array<string,string> $css
      */
     public array $css = [];
+    
+    //REM: [TODO] .|. Encapsulate this properly.
+    public ?RouteData $routeData;
 
     public function __construct( 
         string $title
     ) {
         $this->title = $title;
+    }
+
+    public function setRouteData( ?RouteData $routeData ): void {
+
+        $this->routeData = $routeData;
+    }
+
+    public function setOutlet( IRenderer|string|false $outlet ) {
+
+        $this->outlet = $outlet;
     }
 
     public function render(): View|string|false {

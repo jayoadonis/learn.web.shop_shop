@@ -1,0 +1,11 @@
+#html-home-view {
+    h1 {
+        color: blue;
+    }
+
+    #hero {
+        background-color: aqua;
+        width: 100%;
+        height: 5rem;
+    }
+}

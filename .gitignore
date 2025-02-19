@@ -3,8 +3,12 @@
 /.idea/
 
 /build/
+/out/
+/output/
 /vendor/
 
+/.misc/
+/logs/
 
 .env.*
 !.env.public

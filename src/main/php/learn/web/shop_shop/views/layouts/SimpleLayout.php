@@ -1,48 +1,67 @@
 <?php
+
 declare(strict_types=1);
 
 namespace learn\web\shop_shop\views\layouts;
 
+use learn\web\shop_shop\models\IRenderer;
 use learn\web\shop_shop\models\Layout;
 use learn\web\shop_shop\models\View;
 
-class SimpleLayout extends Layout {
+class SimpleLayout extends Layout
+{
 
-    public function __construct( string $title ) {
+    public function __construct(string $title)
+    {
 
-        parent::__construct( $title );
+        parent::__construct($title);
     }
 
     /**
      * @inheritDoc Layout::render(): View|string|false
      */
-    public function render(): View|string|false {
+    public function render(): View|string|false
+    {
+        
+        // $outlet = parent::render();
+        $outlet = ($this->outlet instanceof IRenderer) ? $this->outlet->render() : $this->outlet;
 
         ob_start();
-        
         ?>
-        
-        <!DOCTYPE html>
-        <html lang="en">
+            <!DOCTYPE html>
+
+            <html lang="en">
+
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="">
+                <link rel="stylesheet" href="/">
                 <?php
-                foreach( $this->css as $key => $value ) {
+                foreach ($this->css as $key => $value) {
                 ?>
-                <link id="<?=$key?>" rel="stylesheet" href="<?=$value?>">
+                    <link id="<?= $key ?>" rel="stylesheet" href="<?= $value ?>">
                 <?php
                 }
                 ?>
+                <title><?= $this->title ?></title>
             </head>
-            <body>
-                <?=$this->outlet->render()?>
+
+            <body id="html-simple-layout">
+                <header>
+
+                </header>
+                
+                <?= $outlet ?>
+
+                <footer>
+
+                </footer>
             </body>
-        </html>
+
+            </html>
 
         <?php
 
-        return ob_get_clean(); 
+        return ob_get_clean();
     }
 }
