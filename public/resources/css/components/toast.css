@@ -1,0 +1,69 @@
+/*REM: Toast container with initial hidden state */
+.el-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #333;
+    color: #fff;
+    padding: 10px 10px 15px;
+    /*REM: extra bottom space for progress bar */
+    border-radius: 4px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: toast-in 0.5s forwards;
+    overflow: hidden;
+}
+
+/*REM: Fade-out class triggers exit animation */
+.el-toast.el-toast-fadeout {
+    animation: toast-out 0.5s forwards;
+}
+
+/*REM: The progress bar at the bottom of the toast */
+.el-toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: #4caf50;
+    width: 100%;
+    animation: progress-bar 2s linear forwards;
+}
+
+/*REM: Keyframe for toast entering */
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*REM: Keyframe for toast exiting */
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/*REM: Keyframe for progress bar countdown */
+@keyframes progress-bar {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}

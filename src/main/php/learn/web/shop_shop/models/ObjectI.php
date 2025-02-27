@@ -8,7 +8,7 @@ class ObjectI {
 
     public function __toString(): string {
 
-        return $this::class . "@" . $this->hashCode();
+        return $this::class . "@" . dechex($this->hashCode());
     }
 
     public function hashCode(): int {

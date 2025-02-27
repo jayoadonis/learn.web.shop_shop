@@ -9,7 +9,7 @@ class User extends Entity {
     public function __construct(
         ?string $id = null,
         public readonly string $USER_NAME,
-        protected ?string $email = null
+        protected ?string $email = null,
     ) {
         parent::__construct($id??"N/a");
     }
@@ -27,6 +27,7 @@ class User extends Entity {
     }
 
     /**
+     * [TODO]
      * @inheritDoc ISessionable::getData()
      * @return User|array<string,mixed>|string|null
      */
@@ -47,6 +48,7 @@ class User extends Entity {
     /**
      * 
      * @return string[]
+     * @inheritdoc
      */
     public function __sleep(): array {
 

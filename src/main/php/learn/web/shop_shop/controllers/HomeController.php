@@ -33,7 +33,7 @@ class HomeController extends Controller {
         ob_start();
         ?>
         
-            <div id="html-home-controller">
+            <div id="el-home-ctrl" class="<?=$this?>">
                 <?=$homeViewRendered?>
             </div>
 

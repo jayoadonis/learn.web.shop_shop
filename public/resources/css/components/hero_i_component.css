@@ -1,5 +1,8 @@
-#html-hero-i-component {
+#el-hero-i-component {
+    background-color: aqua;
+    height: 5rem;
+
     h1 {
-        color: coral;
+        color: purple;
     }
 }

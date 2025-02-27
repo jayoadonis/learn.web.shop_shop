@@ -8,6 +8,7 @@ use learn\web\shop_shop\models\Controller;
 use learn\web\shop_shop\models\Layout;
 use learn\web\shop_shop\models\ObjectI;
 use learn\web\shop_shop\models\routes\RouteData;
+use learn\web\shop_shop\utils\BaseDir;
 use learn\web\shop_shop\utils\Log;
 use learn\web\shop_shop\utils\LogType;
 
@@ -63,7 +64,7 @@ abstract class Router extends ObjectI
             try {
                 $this->get("/404", function (Layout $layout): string {
 
-                    $layout->css["css-page-not-found-view"] = "/public/resources/css/page_not_found_view.css";
+                    $layout->cssManager->add("css-page-not-found-view", BaseDir::getResource("/public/resources/css/page_not_found_view.css"));
 
                     return <<<HTML
                     <div id="html-page-not-found-view">
@@ -116,10 +117,9 @@ abstract class Router extends ObjectI
 
                 if (class_exists($class) && is_subclass_of($class, Controller::class)) {
 
-
-                    Log::log(
-                        LogType::INFO, "Router dispatch(V)V "
-                    );
+                    // Log::log(
+                    //     LogType::INFO, "Router dispatch(V)V "
+                    // );
 
                     $ctrlObj = new $class($this->layout);
 
@@ -158,22 +158,38 @@ abstract class Router extends ObjectI
 
             if (preg_match($pathPattern, $requestURLPath, $paramPathValues)) {
 
+                // echo "<pre>";
+                // print_r($paramPathValues);
+                // echo "</pre>";
+
+
                 array_shift($paramPathValues);
 
                 $paramPathKeys = [];
 
                 preg_match_all("/\{(\w+)\}/", $path, $paramPathKeys);
 
+                // echo "<pre>";
+                // print_r($paramPathKeys);
+                // echo "</pre>";
+
                 /**
                  * @psalm-suppress UnnecessaryVarAnnotation
-                 * @var array<string,string> $paramPath
+                 * @var array<string,string> $paramPaths
                  */
-                $paramPath = array_combine(
+                $paramPaths = array_combine(
                     $paramPathKeys[1],
                     $paramPathValues
                 ) ?: [];
 
-                $routeData->param?->paramPath->set($paramPath);
+                $sanitizedRequestParamPaths = [];
+
+                foreach ($paramPaths as $key => $value) {
+                    $sanitizedRequestParamPaths[htmlspecialchars($key, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')]
+                        = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+                }
+
+                $routeData->param?->paramPath->set($sanitizedRequestParamPaths);
 
 
                 $strQuery = parse_url($_SERVER["REQUEST_URI"] ?? "?error_code=123", PHP_URL_QUERY);
@@ -182,7 +198,14 @@ abstract class Router extends ObjectI
 
                     parse_str($strQuery, $requestQueries);
 
-                    $routeData->param?->query->set($requestQueries);
+                    $sanitizedRequestQueries = [];
+
+                    foreach ($requestQueries as $key => $value) {
+                        $sanitizedRequestQueries[htmlspecialchars($key, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')]
+                            = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+                    }
+
+                    $routeData->param?->query->set($sanitizedRequestQueries);
                 }
 
                 return $routeData;

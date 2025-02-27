@@ -3,7 +3,12 @@
     "description": "A very simple e-commerce web app, however, it implemented a well defined project structure",
     "type": "project",
     "license": "MIT",
+    "config": {
+        "process-timeout": 900
+    },
     "scripts": {
+        "test-serve": "php -S localhost:8008 -t .",
+        "serve": "start cmd /k php -S localhost:8008 -t .",
         "test": "vendor/bin/phpunit --configuration phpunit.xml"
     },
     "autoload": {
@@ -14,6 +19,18 @@
     "authors": [{
         "name": "jayoadonis",
         "email": "jayo.adonisraphael@gmail.com"
+    }, {
+        "name": "plaza",
+        "email": "plaza@gmail.com"
+    }, {
+        "name": "usod",
+        "email": "usod@gmail.com"
+    }, {
+        "name": "borbonMJ",
+        "email": "markjophet_borbon@gmail.com"
+    }, {
+        "name": "cumawas",
+        "email": "cumawas@gmail.com"
     }],
     "require": {
         "php": ">=8.0"

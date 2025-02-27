@@ -3,59 +3,70 @@ declare(strict_types=1);
 
 namespace learn\web\shop_shop\utils;
 
-use learn\web\shop_shop\models\Entity;
 use learn\web\shop_shop\models\ObjectI;
 use learn\web\shop_shop\models\ISessionable;
-use learn\web\shop_shop\models\User;
 
+/**
+ * Session management class for handling ISessionable objects.
+ */
 class Session extends ObjectI {
 
     /**
-     * @var array<class-string<ISessionable>,ISessionable> $GET
+     * Stores a sessionable object into the session.
+     *
+     * @template T of ISessionable
+     * @param T $sessionable The object to store in the session.
+     * @return void
      */
-    // protected static array $GET;
-
+    public static function set(mixed $sessionable): void {
+        if( session_status() === PHP_SESSION_NONE )
+            session_start();
+        $_SESSION[$sessionable->getType()] = $sessionable;
+    }
 
     /**
-     * 
+     * Retrieves a sessionable object from the session.
+     *
      * @template T of ISessionable
-     * @param T $sessionable
+     * @param class-string<T> $type A canonical classname identifying the sessionable type.
+     * @return T|null Returns the sessionable object if found, otherwise null.
      */
-    public static function set(
-        mixed $sessionable
-     ): void {
+    public static function get(string $type): mixed {
+        if( session_status() === PHP_SESSION_NONE )
+            session_start();
+        return $_SESSION[$type] ?? null;
+    }
 
-        // self::$GET[$sessionable->getType()]
-        //     = $sessionable;
+    /**
+     * Clears all session data, removes the session cookie, and destroys the session.
+     *
+     * @return void
+     */
+    public static function clearAll(): void {
+        //REM: Ensure the session is started.
+        if( session_status() === PHP_SESSION_NONE )
+            session_start();
 
-        $_SESSION[$sessionable->getType()]
-            = $sessionable;
+        //REM: Clear all session variables.
+        $_SESSION = [];
 
-     }
+        //REM: Remove the session cookie if sessions use cookies.
+        if (ini_get("session.use_cookies")) {
+            
+            $params = session_get_cookie_params();
 
-     /**
-      * @template T of ISessionable
-      * @param class-string<T> $type A cannonical classname
-      * @return T|null
-      */
-     public static function get( string $type ): mixed {
+            setcookie(
+                session_name(),
+                '',
+                time() - (11*60*60 + 59*60), //REM: 11 hrs and 59 mins
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
 
-        // return self::$GET[$type] ?? null;
-
-        return $_SESSION[$type]?? null;
-     }
-
-    //  /**
-    //   * @param class-string<ISessionable> $type
-    //   */
-    //  public static function update( string $type ): void {
-
-    //     $identifier = null;
-
-    //     if( ($sessionable = self::$GET[$type]) && is_object($identifier = $sessionable->getData()) ) {
-    //         self::$GET[$type] = $identifier;
-    //     } 
-    //     elseif( $identifier && is_array($identifier) ) {
-    //     }
-    //  }
+        //REM: Destroy the session.
+        session_destroy();
+    }
 }

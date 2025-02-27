@@ -16,7 +16,12 @@ abstract class Layout extends ObjectI implements IRenderer {
     /**
      * @var array<string,string> $css
      */
-    public array $css = [];
+    // public array $css = [];
+    
+    public CSSManager $cssManager;
+
+    // public array $js = [];
+    public JSManager $jsManager;
     
     //REM: [TODO] .|. Encapsulate this properly.
     public ?RouteData $routeData;
@@ -25,6 +30,8 @@ abstract class Layout extends ObjectI implements IRenderer {
         string $title
     ) {
         $this->title = $title;
+        $this->cssManager = new CSSManager();
+        $this->jsManager = new JSManager();
     }
 
     public function setRouteData( ?RouteData $routeData ): void {
