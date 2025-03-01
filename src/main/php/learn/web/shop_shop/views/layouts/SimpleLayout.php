@@ -26,11 +26,11 @@ class SimpleLayout extends Layout
     public function render(): View|string|false
     {
 
-        $headerCtrl = (new HeaderController($this))->render();
         $this->cssManager->add("css-toast", BaseDir::getResource("/public/resources/css/components/toast.css"));
         $this->jsManager->add("js-toast", BaseDir::getResource("/public/resources/js/view/components/toast.js"));
         
-        // $outlet = parent::render();
+        
+        $headerCtrl = (new HeaderController($this))->render();
         $outlet = ($this->outlet instanceof IRenderer) ? $this->outlet->render() : $this->outlet;
 
         ob_start();

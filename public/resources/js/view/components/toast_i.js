@@ -1,5 +1,5 @@
-// Enum for toast positions
-const ToastPosition = {
+//REM: Enum for toast positions
+const ToastPosition = Object.freeze({
     CENTER: "center",
     CENTER_LEFT: "center-left",
     CENTER_RIGHT: "center-right",
@@ -9,61 +9,116 @@ const ToastPosition = {
     TOP_RIGHT: "top-right",
     BOTTOM_LEFT: "bottom-left",
     BOTTOM_RIGHT: "bottom-right"
-};
+});
 
-// Active toast tracking
-const activeToasts = new Set();
+const ToastType = Object.freeze({
+    INFO: "info",
+    WARNING: "warning",
+    ERROR: "error",
+    FATAL: "fatal"
+});
+
+const ToastDuration = Object.freeze({
+    SHORT: Object.freeze({
+        us: 3000000,
+        ms: 3000,
+        sec: 3
+    }),
+    LONG: Object.freeze({
+        us: 8000000,
+        ms: 8000,
+        sec: 8
+    }),
+})
+
+//REM: Active toast tracking
+const activeToastsI = new Set();
+let containerToastITimeoutId = undefined;
 
 /**
  * Displays a toast message with stacking and deduplication.
  *
  * @param {string} message - The message to display.
  * @param {string} position - Position from ToastPosition enum.
+ * @param {string} elContainerId - Container ID prefix.
  */
-async function showToastI(message, position = ToastPosition.BOTTOM_RIGHT) {
+async function showToastI(
+    message,
+    type = ToastType.INFO,
+    position = ToastPosition.BOTTOM_RIGHT,
+    duration = ToastDuration.SHORT,
+    elContainerId = "el-toast-i-container"
+) {
     const hash = await hashIt(message);
-    const toastId = `el-toast-${hash}`;
+    const toastId = `el-toast-i-${hash}`;
 
-    if (activeToasts.has(toastId)) {
-        return; // Prevent duplicate messages
+    if (activeToastsI.has(toastId)) {
+        return; //REM: Prevent duplicate messages
     }
 
-    activeToasts.add(toastId);
+    activeToastsI.add(toastId);
 
-    // Get or create the toast container
-    let toastContainer = document.getElementById(`el-main`);
+    //REM: Get or create the toast container for this position
+    const containerKey = `${elContainerId}-${position}`;
+    let toastContainer = document.getElementById(containerKey);
     if (!toastContainer) {
+        clearInterval(containerToastITimeoutId);
         toastContainer = document.createElement("div");
-        toastContainer.id = `el-main-${position}`;
-        toastContainer.className = `el-main ${position}`;
+        toastContainer.id = containerKey;
+        toastContainer.className = `${elContainerId} ${position}`;
         document.body.appendChild(toastContainer);
     }
 
-    // Create toast element
+    //REM: Create toast element
     const elToast = document.createElement("div");
     elToast.id = toastId;
-    elToast.className = `el-toast ${position}`;
+    elToast.className = `el-toast-i ${type} ${position}`;
 
-    // Message content
+    //REM: Message content
     const msgElem = document.createElement("div");
-    msgElem.className = "el-toast-message";
+    msgElem.className = "el-toast-i-message";
     msgElem.textContent = message;
     elToast.appendChild(msgElem);
 
-    // Progress bar
+    //REM: Progress bar
     const progress = document.createElement("div");
-    progress.className = "el-toast-progress";
+    progress.className = "el-toast-i-progress";
     elToast.appendChild(progress);
 
-    // Insert toast at the top of the stack
+    //REM: Insert toast at the top of the stack
     toastContainer.prepend(elToast);
 
-    // Auto-remove after 2s
+    progress.style.animationDuration = `${duration.sec}s`;
+
+    //REM: Auto-remove after 2s
     setTimeout(() => {
-        elToast.classList.add("el-toast-fadeout");
+        activeToastsI.delete(toastId);
+        elToast.classList.add("el-toast-i-fadeout");
         setTimeout(() => {
             elToast.remove();
-            activeToasts.delete(toastId);
+            removeContainerIfEmpty(toastContainer);
         }, 500);
-    }, 2000);
+    }, duration.ms + 500);
+
+    if (!containerToastITimeoutId) {
+        containerToastITimeoutId = setInterval(() => {
+            if (activeToastsI.size <= 0) {
+                toastContainer.remove();
+                clearInterval(containerToastITimeoutId);
+                containerToastITimeoutId = undefined;
+            }
+        }, 500);
+    }
+}
+
+/**
+ * Removes the toast container if empty.
+ */
+function removeContainerIfEmpty(container) {
+    requestAnimationFrame(() => {
+        if (activeToastsI.size === 0) {
+            container.remove();
+            containerToastITimeoutId = undefined;
+        }
+    });
 }

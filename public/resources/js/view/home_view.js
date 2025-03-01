@@ -9,13 +9,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     btnTest1.addEventListener("click", () => {
-        showToastI("Button Test One (1)", ToastPosition.CENTER_TOP);
+        showToastI(
+            "Button Test One (1)",
+            ToastType.ERROR,
+            ToastPosition.TOP_LEFT,
+            ToastDuration.LONG
+        );
     }, {
         passive: true
     });
 
     btnTest2.addEventListener("click", () => {
-        showToastI("Button Test Two (2)");
+        showToastI(
+            "Button Test Two (2), Button Test Two (2), 123",
+            ToastType.INFO,
+            ToastPosition.BOTTOM_RIGHT
+        );
     }, {
         passive: true
     });
