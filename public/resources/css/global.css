@@ -1,4 +1,5 @@
 :root {
+    color-scheme: light dark;
 
     --background-color: #ffbf80;
     --text-primary-color: #422101;
@@ -44,8 +45,11 @@
     --accent-color-theme: black;
 }
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+    color: var(--text-primary-color);
 
     /*REM: For visualizing boxing/outline debugging*/
     /* outline: .18rem solid lime !important; */

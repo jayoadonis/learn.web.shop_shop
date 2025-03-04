@@ -31,6 +31,8 @@ class SimpleLayout extends Layout
         
         
         $headerCtrl = (new HeaderController($this))->render();
+
+        //REM: Contronller rendering...
         $outlet = ($this->outlet instanceof IRenderer) ? $this->outlet->render() : $this->outlet;
 
         ob_start();
@@ -60,7 +62,7 @@ class SimpleLayout extends Layout
                 </section>
 
                 <footer>
-
+                    <h1>Footer...</h1>
                 </footer>
 
                 <script id="js-util-hasher" src="/public/resources/js/utils/hasher.js"></script>

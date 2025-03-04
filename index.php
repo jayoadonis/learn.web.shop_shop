@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once(__DIR__ . "/src/main/php/learn/web/shop_shop/prefetch.php");
 
 use learn\web\shop_shop\controllers\HomeController;
+use learn\web\shop_shop\controllers\SigningController;
 use learn\web\shop_shop\models\Entity;
 use learn\web\shop_shop\models\Layout;
 use learn\web\shop_shop\models\User;
@@ -13,7 +14,7 @@ use learn\web\shop_shop\utils\SimpleRouter;
 use learn\web\shop_shop\views\layouts\SimpleLayout;
 
 
-Session::set( new User( "101", "user_123", "user_123@email.io") );
+// Session::set( new User( "101", "user_123", "user_123@email.io") );
 
 $simpleRouter = new SimpleRouter( new SimpleLayout("prototype-i") );
 
@@ -77,6 +78,8 @@ $productFC = function(Layout $layout): string {
 $simpleRouter->get("/product", $productFC );
 $simpleRouter->get("/product/{id}", $productFC );
 $simpleRouter->get("/product/{id}/{verb}", $productFC );
+
+$simpleRouter->get("/signing", [SigningController::class]);
 
 $simpleRouter->dispatch();
 

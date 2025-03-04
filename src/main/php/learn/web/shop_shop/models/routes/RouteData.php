@@ -17,7 +17,8 @@ class RouteData extends ObjectI {
      */
     public function __construct(
         public readonly string $METHOD,
-        public readonly string $PATH,
+        public readonly string $PATH_BLUEPRINT,
+        public ?string $path,
         public ?Param $param,
         public readonly mixed $CONTROLLER
     ) {

@@ -150,7 +150,7 @@
 }
 
 .el-toast-i.fatal .el-toast-i-progress {
-    background: var(--toast-i-accent-fatal-color);
+    background: var(--toast-i-accent-info-color);
 }
 
 /* Animations */

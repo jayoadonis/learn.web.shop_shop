@@ -37,6 +37,7 @@ abstract class Router extends ObjectI
             self::$ROUTES[$method][$path] = new RouteData(
                 $method,
                 $path,
+                null,
                 new Param(new ParamPath([]), new Query([])),
                 $controller
             );
@@ -121,6 +122,7 @@ abstract class Router extends ObjectI
                     //     LogType::INFO, "Router dispatch(V)V "
                     // );
 
+                    //REM: Controller
                     $ctrlObj = new $class($this->layout);
 
                     // if( $ctrlObj instanceof Controller )
@@ -207,6 +209,8 @@ abstract class Router extends ObjectI
 
                     $routeData->param?->query->set($sanitizedRequestQueries);
                 }
+
+                $routeData->path = $requestURLPath;
 
                 return $routeData;
             }

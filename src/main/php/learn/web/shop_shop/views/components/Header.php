@@ -36,15 +36,21 @@ class Header extends View {
             BaseDir::getResource("/public/resources/js/toggle_theme.js")
         );
 
+
+        $isSigningURL= ($this->controller->layout->routeData->path === "/signing");
+
         ob_start();
         ?>
 
         <div id="el-header-component" class="<?=$this?>">
-            <h1>Header...123</h1>
+            <a href="/"><h1>Header...123</h1></a>
             <lable id="toggle-theme-container" class="el-toggle-theme-container" type="button">
                 <input id="toggle-theme" type="checkbox" aria-label="toggle theme"/>
                 <span id="toggle-theme-slider" class="el-toggle-theme-slider" ></span>
             </lable>
+            <?php if( !$isSigningURL ): ?>
+                <a href="/signing">Subscribe</a>
+            <?php endif; ?>
         </div>
         <?php
 

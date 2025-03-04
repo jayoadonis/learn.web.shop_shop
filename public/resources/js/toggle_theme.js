@@ -1,18 +1,28 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
 
     handleThemeColor();
+}, {
+    passive: true
+});
+
+window.addEventListener("pageshow", function(event) {
+    //REM: check event.persisted to only run when the page is loaded from bfcache:
+    if (event.persisted) {
+        handleThemeColor();
+    }
+}, {
+    passive: true
 });
 
 
 function handleThemeColor() {
-
-    const LS_THEME_KEY = "theme_toggle"; //REM: LocalStorage Key
+    const LS_THEME_KEY = "theme_toggle"; //REM: LocalStorage key
     const btnThemeToggle = document.getElementById("toggle-theme-container");
     const toggleTheme = document.getElementById("toggle-theme");
     const toggleThemeSlider = document.getElementById("toggle-theme-slider");
 
-    if (!btnThemeToggle || !toggleTheme) {
-        console.error("Missing required element id(s): (toggle-theme-container)");
+    if (!btnThemeToggle || !toggleTheme || !toggleThemeSlider) {
+        console.error("Missing required element id(s): toggle-theme-container, toggle-theme, or toggle-theme-slider");
         return;
     }
 
@@ -20,34 +30,21 @@ function handleThemeColor() {
     let currentTheme = localStorage.getItem(LS_THEME_KEY) || "light";
     localStorage.setItem(LS_THEME_KEY, currentTheme);
 
-    //REM: Apply theme
-    document.documentElement.setAttribute("color-theme", currentTheme);
+    //REM: Update UI with the current theme
+    function applyTheme(theme) {
+        document.documentElement.setAttribute("color-theme", theme);
+        toggleTheme.checked = theme === "dark";
+        toggleThemeSlider.textContent = theme.toUpperCase();
+    }
 
-    //REM: Sync toggle button state with theme
-    toggleTheme.checked = (currentTheme === "dark");
+    //REM: Initialize theme on page load
+    applyTheme(currentTheme);
 
-    toggleThemeSlider.textContent = currentTheme.toUpperCase();
-
-    // toggleTheme.addEventListener("change", (event) => {
-
-    //     event.preventDefault();
-    // });
-
-    btnThemeToggle.addEventListener("click", (event) => {
-
+    //REM: Toggle theme on button click
+    btnThemeToggle.addEventListener("click", function(event) {
         event.preventDefault();
-
-        toggleTheme.checked = (!toggleTheme.checked);
-
-        const newTheme = toggleTheme.checked ? "dark" : "light";
-
-        toggleThemeSlider.textContent = newTheme.toUpperCase();
-
-
-        localStorage.setItem(LS_THEME_KEY, newTheme);
-        document.documentElement.setAttribute("color-theme", newTheme);
-
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        localStorage.setItem(LS_THEME_KEY, currentTheme);
+        applyTheme(currentTheme);
     });
-
-    return;
 }

@@ -1,0 +1,47 @@
+<?php
+declare(strict_types=1);
+
+namespace learn\web\shop_shop\controllers;
+
+use learn\web\shop_shop\models\Controller;
+use learn\web\shop_shop\models\Layout;
+use learn\web\shop_shop\models\User;
+use learn\web\shop_shop\models\View;
+use learn\web\shop_shop\utils\Session;
+use learn\web\shop_shop\views\SigningView;
+
+class SigningController extends Controller {
+
+
+    public function __construct(
+        Layout $layout
+    ) {
+        parent::__construct($layout);
+    }
+
+    /**
+     * 
+     * @inheritdoc
+     */
+    public function render(): View|string|false {
+
+        if( Session::get(User::class) ) {
+
+            header("Location: /home");
+            // return false;
+        }
+
+        $signingViewRender = (new SigningView($this))->render();
+
+
+        ob_start();
+
+        ?>
+            <div id="html-signing-ctrl">
+                <?= $signingViewRender ?>
+            </div>
+        <?php
+
+        return ob_get_clean();
+    }
+}

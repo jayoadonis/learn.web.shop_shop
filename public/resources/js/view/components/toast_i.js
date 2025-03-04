@@ -1,4 +1,4 @@
-//REM: Enum for toast positions
+//REM: Enum for toast positions EcmaScript 3, 5, 6
 const ToastPosition = Object.freeze({
     CENTER: "center",
     CENTER_LEFT: "center-left",
@@ -10,6 +10,8 @@ const ToastPosition = Object.freeze({
     BOTTOM_LEFT: "bottom-left",
     BOTTOM_RIGHT: "bottom-right"
 });
+
+
 
 const ToastType = Object.freeze({
     INFO: "info",
@@ -31,7 +33,7 @@ const ToastDuration = Object.freeze({
     }),
 })
 
-//REM: Active toast tracking
+//REM: Active toast tracking 
 const activeToastsI = new Set();
 let containerToastITimeoutId = undefined;
 
