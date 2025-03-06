@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 window.addEventListener("pageshow", function(event) {
-    //REM: check event.persisted to only run when the page is loaded from bfcache:
-    if (event.persisted) {
-        handleThemeColor();
-    }
+    //REM: check event.persisted to only run when the page is loaded from bfcache (back/forward cache):
+    // if (event.persisted) {
+    handleThemeColor();
+    // }
 }, {
     passive: true
 });

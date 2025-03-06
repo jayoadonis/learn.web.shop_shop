@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace learn\web\shop_shop\views;
 
 use learn\web\shop_shop\models\View;
-use learn\web\shop_shop\views\components\SignUp;
+use learn\web\shop_shop\views\components\SignUpComponent;
 
 class SigningView extends View {
 
@@ -15,13 +15,12 @@ class SigningView extends View {
      */
     public function render(): View|string|false {
 
-        $signUpViewRender = (new SignUp($this->controller))->render();
+        $signUpViewRender = (new SignUpComponent($this->controller))->render();
 
         ob_start();
         ?>
             <div id="html-signing-view" style="">
                 <?=$signUpViewRender?>
-                <?
             </div>
         <?php
         return ob_get_clean();

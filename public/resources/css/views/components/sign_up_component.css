@@ -1,0 +1,57 @@
+
+#html-sign-up-component {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0;
+    background-color: transparent;
+
+    * {
+        font-size: 1rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        margin: 0 auto;
+    }
+
+    form * {
+        border-radius: 0.5rem;
+    }
+
+    button,
+    input,
+    select {
+        outline: none;
+        padding: 0.50rem 0.50rem;
+        border: 0.20rem solid var(--color-success);
+        cursor: pointer;
+    }
+
+    input {
+        cursor: auto;
+    }
+
+    input::placeholder {
+        color: var(--color-text-secondary);
+    }
+
+    input:focus {
+        border-color: var(--color-accent-secondary);
+    }
+
+    button[signUp] {
+        padding: 0.5rem 0;
+        border-radius: 2.5rem;
+        background-color: var(--color-background-secondary);
+    }
+
+    button[signUp]:hover {
+        color: var(--color-background-secondary);
+        background-color: var(--color-success);
+        border-color: var(--color-background-secondary);
+        transform: scale(103%);
+        font-weight: bolder;
+    }
+}

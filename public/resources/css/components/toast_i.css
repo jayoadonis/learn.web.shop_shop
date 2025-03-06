@@ -1,19 +1,19 @@
 :root {
-    --toast-i-bg-info-color: var(--bg-info-color, #2196F3);
-    --toast-i-txt-info-color: var(--txt-info-color, #fff);
-    --toast-i-accent-info-color: var(--accent-info-color, lime);
+    --toast-i-bg-info-color: var(--color-bg-info-color, #2196F3);
+    --toast-i-txt-info-color: var(--color-txt-info-color, #fff);
+    --toast-i-accent-info-color: var(--color-accent-info-color, lime);
 
-    --toast-i-bg-warning-color: var(--bg-warning-color, #FF9800);
-    --toast-i-txt-warning-color: var(--txt-warning-color, #fff);
-    --toast-i-accent-warning-color: var(--accent-warning-color, #F57C00);
+    --toast-i-bg-warning-color: var(--color-bg-warning-color, #FF9800);
+    --toast-i-txt-warning-color: var(--color-txt-warning-color, #fff);
+    --toast-i-accent-warning-color: var(--color-accent-warning-color, #F57C00);
 
-    --toast-i-bg-error-color: var(--bg-error-color, #f76464);
-    --toast-i-txt-error-color: var(--txt-error-color, #fff);
-    --toast-i-accent-error-color: var(--accent-error-color, #ab0000);
+    --toast-i-bg-error-color: var(--color-bg-error-color, #f76464);
+    --toast-i-txt-error-color: var(--color-txt-error-color, #fff);
+    --toast-i-accent-error-color: var(--color-accent-error-color, #ab0000);
 
-    --toast-i-bg-fatal-color: var(--bg-fatal-color, #9C27B0);
-    --toast-i-txt-fatal-color: var(--txt-fatal-color, #fff);
-    --toast-i-accent-fatal-color: var(--accent-fatal-color, #7B1FA2);
+    --toast-i-bg-fatal-color: var(--color-bg-fatal-color, #9C27B0);
+    --toast-i-txt-fatal-color: var(--color-txt-fatal-color, #fff);
+    --toast-i-accent-fatal-color: var(--color-accent-fatal-color, #7B1FA2);
 }
 
 
@@ -102,6 +102,7 @@
 /* Toast message text styling */
 .el-toast-i-message {
     margin-bottom: 8px;
+    background-color: transparent;
 }
 
 /* Progress bar */
@@ -119,7 +120,22 @@
 /* Type-specific styling */
 .el-toast-i.info {
     background: var(--toast-i-bg-info-color);
+}
+
+.el-toast-i.info * {
     color: var(--toast-i-txt-info-color);
+}
+
+.el-toast-i.warning * {
+    color: var(--toast-i-txt-warning-color);
+}
+
+.el-toast-i.error * {
+    color: var(--toast-i-txt-error-color);
+}
+
+.el-toast-i.fatal * {
+    color: var(--toast-i-txt-fatal-color);
 }
 
 .el-toast-i.info .el-toast-i-progress {

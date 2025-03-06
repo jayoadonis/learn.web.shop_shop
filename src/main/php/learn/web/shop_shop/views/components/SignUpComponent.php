@@ -5,12 +5,13 @@ namespace learn\web\shop_shop\views\components;
 
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\models\Controller;
+use learn\web\shop_shop\utils\BaseDir;
 
 /**
  * 
  * @extends View<Controller>
  */
-class SignUp extends View {
+class SignUpComponent extends View {
 
     /**
      * 
@@ -18,16 +19,20 @@ class SignUp extends View {
      */
     public function render(): View|string|false {
 
+        $this->controller->layout->cssManager->add(
+            "css-sign-up-component", BaseDir::getResource("/public/resources/css/views/components/sign_up_component.css")
+        );
+
         ob_start();
         ?>
-            <div id="html-sign-up-component" style="display: flex; background: lime;">
-                <form style="display: flex; flex-direction: column; margin: 0 auto;">
-                    <div class="full-name">
+            <div id="html-sign-up-component" >
+                <form>
+                    <div class="el-full-name">
                         <input name="first_name" type="text" placeholder="First Name"/>
                         <input name="middle_name" type="text" placeholder="Middle Name"/>
                         <input name="last_name" type="text" placeholder="Last Name"/>
                     </div>
-                    <div class="">
+                    <div class="el-general-info">
                         <select name="gender">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -36,7 +41,7 @@ class SignUp extends View {
                         <input name="civil_status" type="text" placeholder="Civil Status"/>
                     </div>
 
-                    <button type="button">Sign Up</button>
+                    <button type="button" signUp>Sign Up</button>
                 </form>
             </div>
         <?php

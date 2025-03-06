@@ -1,5 +1,5 @@
 #html-page-not-found-view {
     h1 {
-        color: red;
+        color: var(--color-call-to-action);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace learn\web\shop_shop\controllers;
 
 use learn\web\shop_shop\models\Controller;
+use learn\web\shop_shop\models\GymStoneURL;
 use learn\web\shop_shop\models\Layout;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\LogType;
@@ -33,7 +34,10 @@ class HomeController extends Controller
 
         $paramPathVerb = $this->layout->routeData->param->paramPath->get("verb");
 
-        if( $paramPathVerb === "demo-button") {
+        GymStoneURL::validateParamPathVerb( GymStoneURL::HOME, $paramPathVerb );
+
+
+        if( $paramPathVerb === GymStoneURL::HOME->getParamVerb()->demoButton ) {
             $this->layout->cssManager->add("css-demo-button", "public/resources/css/misc/demo_button.css");
             $this->layout->jsManager->add("js-demo-button", "public/resources/js/misc/demo_button.js");
         }
@@ -41,11 +45,12 @@ class HomeController extends Controller
             $homeViewRendered = (new HomeView($this))->render();
         }
 
+
         ob_start();
 ?>
 
         <div id="el-home-ctrl" class="<?= $this ?>">
-            <?php if ($paramPathVerb !== "demo-button"): ?>
+            <?php if ($paramPathVerb !== GymStoneURL::HOME->getParamVerb()->demoButton): ?>
                 <?= $homeViewRendered ?>
             <?php else: ?>
                 <h1>UI Components Demo</h1>

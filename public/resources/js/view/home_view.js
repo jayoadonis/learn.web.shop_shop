@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     btnTest1.addEventListener("click", () => {
         showToastI(
             "Button Test One (1)",
-            ToastType.FATAL,
-            ToastPosition.CENTER,
+            ToastType.ERROR,
+            ToastPosition.BOTTOM_RIGHT,
             ToastDuration.LONG
         );
     }, {
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showToastI(
             "Button Test Two (2), Button Test Two (2), 123",
             ToastType.INFO,
-            ToastPosition.CENTER
+            ToastPosition.BOTTOM_RIGHT
         );
     }, {
         passive: true

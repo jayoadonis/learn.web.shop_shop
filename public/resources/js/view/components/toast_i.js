@@ -1,4 +1,4 @@
-//REM: Enum for toast positions EcmaScript 3, 5, 6
+//REM: Enum for toast positions EcmaScript 5, 6
 const ToastPosition = Object.freeze({
     CENTER: "center",
     CENTER_LEFT: "center-left",
@@ -10,8 +10,6 @@ const ToastPosition = Object.freeze({
     BOTTOM_LEFT: "bottom-left",
     BOTTOM_RIGHT: "bottom-right"
 });
-
-
 
 const ToastType = Object.freeze({
     INFO: "info",
@@ -41,8 +39,11 @@ let containerToastITimeoutId = undefined;
  * Displays a toast message with stacking and deduplication.
  *
  * @param {string} message - The message to display.
- * @param {string} position - Position from ToastPosition enum.
- * @param {string} elContainerId - Container ID prefix.
+ * @param {typeof ToastType[keyof typeof ToastType]} [type=ToastType.INFO] - The type of toast (e.g., "info", "warning", "error", "fatal").
+ * @param {typeof ToastPosition[keyof typeof ToastPosition]} [position=ToastPosition.BOTTOM_RIGHT] - The position of the toast.
+ * @param {typeof ToastDuration} [duration=ToastDuration.SHORT] - The duration of the toast.
+ * @param {string} [elContainerId] - The ID prefix for the toast container.
+ * @returns {Promise<void>} - A promise that resolves when the toast is displayed.
  */
 async function showToastI(
     message,

@@ -5,6 +5,7 @@ require_once(__DIR__ . "/src/main/php/learn/web/shop_shop/prefetch.php");
 
 use learn\web\shop_shop\controllers\HomeController;
 use learn\web\shop_shop\controllers\SigningController;
+use learn\web\shop_shop\models\GymStoneURL;
 use learn\web\shop_shop\models\Entity;
 use learn\web\shop_shop\models\Layout;
 use learn\web\shop_shop\models\User;
@@ -37,10 +38,10 @@ $simpleRouter->get("/closure-way", function( Layout $layout ): string {
     HTML;
 });
 
-$simpleRouter->get("/", [HomeController::class]);
-$simpleRouter->get("/home", [HomeController::class]);
-$simpleRouter->get("/home/{id}", [HomeController::class]);
-$simpleRouter->get("/home/{id}/{verb}", [HomeController::class]);
+$simpleRouter->get( "/",                                    [HomeController::class]);
+$simpleRouter->get( GymStoneURL::HOME->get(),               [HomeController::class]);
+$simpleRouter->get( GymStoneURL::HOME->get("{id}"),         [HomeController::class]);
+$simpleRouter->get( GymStoneURL::HOME->get("{id}/{verb}"),  [HomeController::class]);
 
 
 $productFC = function(Layout $layout): string {

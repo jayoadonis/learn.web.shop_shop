@@ -1,12 +1,7 @@
 :root {
     color-scheme: light dark;
 
-    --background-color: #ffbf80;
-    --text-primary-color: #422101;
-
-    --accent-color-theme: white;
-
-    --primary-font:
+    --font-default:
         "Roboto",
         system-ui,
         -apple-system,
@@ -20,55 +15,113 @@
         'Helvetica Neue',
         sans-serif;
 
-    --bg-info-color: #2196F3;
-    --txt-info-color: #fff;
-    --accent-info-color: lime;
+    /**REM: BEGIN: color palette (LIGHT_MODE)*/
+    --color-text-primary: #1D1B38;
+    --color-text-secondary: #4E4C67;
 
-    --bg-warning-color: #FF9800;
-    --txt-warning-color: #fff;
-    --accent-warning-color: #F57C00;
+    --color-background-primary: #F5F7FA;
+    --color-background-secondary: #E3E5E8;
 
-    --bg-error-color: #f76464;
-    --txt-error-color: #fff;
-    --accent-error-color: #ab0000;
+    /**REM: (Strength & Power) */
+    --color-accent-primary: #7F1D48;
+    /**REM: (Energy & Motion) */
+    --color-accent-secondary: #FF914D;
 
-    --bg-fatal-color: #9C27B0;
-    --txt-fatal-color: #fff;
-    --accent-fatal-color: #7B1FA2;
+    /**REM: (Health & Wellness) */
+    --color-success: #3AAFA9;
+
+    /**REM: (Action & Urgency) */
+    --color-call-to-action: #F2545B;
+
+    /**REM: (Luxury & High-End Items) */
+    --color-premium-highlights: #C29760;
+    /**REM: END: color palette (LIGHT_MODE)*/
+
+
+    /**REM: BEGIN: toast_i notification colors*/
+    --color-bg-info-color: #2196F3;
+    --color-txt-info-color: #fff;
+    --color-accent-info-color: lime;
+
+    --color-bg-warning-color: #FF9800;
+    --color-txt-warning-color: #fff;
+    --color-accent-warning-color: #f500e5;
+
+    --color-bg-error-color: #ff3b3b;
+    --color-txt-error-color: #fff;
+    --color-accent-error-color: #ffd900;
+
+    --color-bg-fatal-color: #9C27B0;
+    --color-txt-fatal-color: #fff;
+    --color-accent-fatal-color: #00ffe5;
+    /**REM: END: toast_i notification colors*/
+
 }
 
 :root[color-theme="dark"] {
 
-    --background-color: #d66b00;
-    --text-primary-color: #ffffff;
 
-    --accent-color-theme: black;
+    /**REM: BEGIN: color palette (DARK_MODE)*/
+    --color-text-primary: #E0E0E0;
+    --color-text-secondary: #A5A5A5;
+
+    --color-background-primary: #14121E;
+    --color-background-secondary: #1E1A2E;
+
+    /**REM: (Strength & Power) */
+    --color-accent-primary: #E63988;
+    /**REM: (Energy & Motion) */
+    --color-accent-secondary: #FF6D00;
+
+    /**REM: (Health & Wellness) */
+    --color-success: #2DE2A6;
+    /**REM: (Action & Urgency) */
+    --color-call-to-action: #FF4F5A;
+
+    /**REM: (Luxury & High-End Items) */
+    --color-premium-highlights: #D4A373;
+    /**REM: END: color palette (DARK_MODE)*/
 }
 
 *,
 *::before,
 *::after {
     box-sizing: border-box;
-    color: var(--text-primary-color);
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary);
 
-    /*REM: For visualizing boxing/outline debugging*/
-    /* outline: .18rem solid lime !important; */
-    /* background: rgb(0 100 0/0.1) !important; */
+    -webkit-transition: 0.5s;
+    transition: 0.5s
+        /*REM: For visualizing boxing/outline debugging*/
+        /* outline: .18rem solid lime !important; */
+        /* background: rgb(0 100 0/0.1) !important; */
 }
 
 body {
     margin: 0;
     padding: 0.5rem;
-    width: 100%;
     display: flex;
     flex-direction: column;
 
-    font-family: var(--primary-font);
-    background-color: var(--background-color);
+    font-family: var(--font-default);
+    background-color: var(--color-background-primary);
 }
 
-h1 {
-    color: var(--text-primary-color);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+    color: var(--color-text-primary);
+    background-color: transparent;
+}
+
+/**REM: sample */
+.banner {
+    background-color: var(--color-background-secondary);
 }
 
 

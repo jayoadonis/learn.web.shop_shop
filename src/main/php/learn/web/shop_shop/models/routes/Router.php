@@ -29,16 +29,31 @@ abstract class Router extends ObjectI
      */
     protected function add(
         string $method,
-        string $path,
+        string $pathBlueprint,
         callable|array $controller
     ): bool {
 
-        if (!isset(self::$ROUTES[$method][$path])) {
-            self::$ROUTES[$method][$path] = new RouteData(
+        $param = new Param(
+            new ParamPath([]),
+            new Query([])
+        );
+
+        //REM: [TODO] .|. Only works with class controller...
+        if( is_array( $controller ) ) {
+
+            if( is_array( $controller[1]??null ) ) 
+                $param->paramPath->addValidParamPathKey( $controller[1] );
+            
+            // if( is_array( $controller[2]??null ) ) 
+            //     $param->query->addValidQueryKey( $controller[2] );
+        }
+
+        if (!isset(self::$ROUTES[$method][$pathBlueprint])) {
+            self::$ROUTES[$method][$pathBlueprint] = new RouteData(
                 $method,
-                $path,
+                $pathBlueprint,
                 null,
-                new Param(new ParamPath([]), new Query([])),
+                $param,
                 $controller
             );
 
@@ -51,7 +66,7 @@ abstract class Router extends ObjectI
     public function dispatch(): void
     {
 
-        $routeData = $this->getRouterData();
+        $routeData = $this->reloadRouterData();  //REM: [TODO]
 
         // $parsedURL = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
@@ -65,7 +80,7 @@ abstract class Router extends ObjectI
             try {
                 $this->get("/404", function (Layout $layout): string {
 
-                    $layout->cssManager->add("css-page-not-found-view", BaseDir::getResource("/public/resources/css/page_not_found_view.css"));
+                    $layout->cssManager->add("css-page-not-found-view", BaseDir::getResource("/public/resources/css/views/page_not_found_view.css"));
 
                     return <<<HTML
                     <div id="html-page-not-found-view">
@@ -81,7 +96,7 @@ abstract class Router extends ObjectI
 
             $parsedURL = "/404";
 
-            $routeData = $this->getRouterData(null, $parsedURL);
+            $routeData = $this->reloadRouterData(null, $parsedURL);  //REM: [TODO]
         }
 
 
@@ -125,6 +140,8 @@ abstract class Router extends ObjectI
                     //REM: Controller
                     $ctrlObj = new $class($this->layout);
 
+                    // $routeData = $this->reloadRouterData(); //REM: [TODO]
+
                     // if( $ctrlObj instanceof Controller )
                     $this->layout->setOutlet($ctrlObj);
                     $this->layout->setRouteData($routeData);
@@ -143,7 +160,8 @@ abstract class Router extends ObjectI
         throw new \Exception("Invalid controller type, cannot dispatch.");
     }
 
-    private function getRouterData(
+     //REM: [TODO]
+    private function reloadRouterData(
         ?string $requestMethod = null,
         ?string $requestURLPath = null
     ): ?RouteData {
@@ -151,9 +169,9 @@ abstract class Router extends ObjectI
         $requestMethod = strtoupper($requestMethod ?? $_SERVER["REQUEST_METHOD"] ?? "GET");
         $requestURLPath = "/" . trim(parse_url($requestURLPath ?? $_SERVER["REQUEST_URI"] ?? "/404", PHP_URL_PATH), "/");
 
-        foreach (self::$ROUTES[$requestMethod] ?? [] as $path => $routeData) {
+        foreach (self::$ROUTES[$requestMethod] ?? [] as $pathBlueprint => $routeData) {
 
-            $pathPattern = preg_replace("/\{(\w+)\}/", "([^/]+)", $path);
+            $pathPattern = preg_replace("/\{(\w+)\}/", "([^/]+)", $pathBlueprint);
             $pathPattern = "#^$pathPattern$#";
 
             $paramPathValues = [];
@@ -169,7 +187,7 @@ abstract class Router extends ObjectI
 
                 $paramPathKeys = [];
 
-                preg_match_all("/\{(\w+)\}/", $path, $paramPathKeys);
+                preg_match_all("/\{(\w+)\}/", $pathBlueprint, $paramPathKeys);
 
                 // echo "<pre>";
                 // print_r($paramPathKeys);
@@ -223,11 +241,11 @@ abstract class Router extends ObjectI
      * 
      * @param callable|array<string> $ctrl
      */
-    public abstract function get(string $path, callable|array $ctrl): void;
+    public abstract function get(string $pathBlueprint, callable|array $ctrl): void;
 
     /**
      * 
      * @param callable|array<string> $ctrl
      */
-    public abstract function post(string $path, callable|array $ctrl): void;
+    public abstract function post(string $pathBlueprint, callable|array $ctrl): void;
 }

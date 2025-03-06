@@ -1,8 +1,8 @@
 #el-hero-i-component {
-    background-color: aqua;
+    background-color: var(--color-background-secondary);
     height: 5rem;
 
     h1 {
-        color: purple;
+        color: var(--color-text-primary);
     }
 }

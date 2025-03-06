@@ -43,7 +43,7 @@ class Header extends View {
         ?>
 
         <div id="el-header-component" class="<?=$this?>">
-            <a href="/"><h1>Header...123</h1></a>
+            <a href="/home"><h1>Header...123</h1></a>
             <lable id="toggle-theme-container" class="el-toggle-theme-container" type="button">
                 <input id="toggle-theme" type="checkbox" aria-label="toggle theme"/>
                 <span id="toggle-theme-slider" class="el-toggle-theme-slider" ></span>

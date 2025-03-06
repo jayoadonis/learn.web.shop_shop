@@ -17,8 +17,8 @@
     max-width: 50%;
     height: 80%;
     transform: translate(4%, 14%);
-    background: var(--accent-color-theme, white);
-    color: black;
+    background: var(--color-background-secondary, white);
+    color: var(--color-text-primary);
     border-radius: inherit;
     transition: 0.3s;
     place-content: center;
@@ -31,7 +31,7 @@
 }
 
 .el-toggle-theme-container input:checked+.el-toggle-theme-slider {
-    background: var(--accent-color-theme, white);
-    color: white;
+    background: var(--color-background-secondary, white);
+    color: var(--color-text-primary);
     transform: translate(96%, 14%);
 }

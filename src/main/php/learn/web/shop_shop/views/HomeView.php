@@ -30,7 +30,7 @@ class HomeView extends View {
 
         // $this->controller->layout->css["css-home-view"] = "/public/resources/css/home_view.css";
 
-        $this->controller->layout->cssManager->add("css-home-view", BaseDir::getResource("/public/resources/css/home_view.css"));
+        $this->controller->layout->cssManager->add("css-home-view", BaseDir::getResource("/public/resources/css/views/home_view.css"));
         
         $this->controller->layout->jsManager->add("js-home-view", BaseDir::getResource("/public/resources/js/view/home_view.js"));
 

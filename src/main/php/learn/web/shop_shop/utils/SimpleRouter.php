@@ -10,18 +10,18 @@ class SimpleRouter extends Router {
     /**
      * @inheritDoc Router::get()
      */
-    public function get(string $path, callable|array $ctrl ): void {
+    public function get(string $pathBlueprint, callable|array $ctrl ): void {
 
-        if( !$this->add("GET", $path, $ctrl) )
-            throw new \Exception("Cannot Be added 'path' = '{$path}' as GET.");
+        if( !$this->add("GET", $pathBlueprint, $ctrl) )
+            throw new \Exception("Cannot Be added 'path' = '{$pathBlueprint}' as GET.");
     }
  
     /**
      * @inheritDoc Router::post()
      */
-    public function post(string $path, callable|array $ctrl ): void {
+    public function post(string $pathBlueprint, callable|array $ctrl ): void {
 
-        if( !$this->add("POST", $path, $ctrl) )
-            throw new \Exception("Cannot Be added 'path' = '{$path}' as POST.");
+        if( !$this->add("POST", $pathBlueprint, $ctrl) )
+            throw new \Exception("Cannot Be added 'path' = '{$pathBlueprint}' as POST.");
     }
 }
