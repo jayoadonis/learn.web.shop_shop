@@ -20,7 +20,7 @@ class DemoTest extends TestCase {
      */
     public static function tearDownAfterClass(): void
     {
-        print "static destruct\n";
+        print "static destructor\n";
     }
 
     /**
@@ -28,7 +28,7 @@ class DemoTest extends TestCase {
      * @before
      */
     public function init(): void {
-        print "init...\n";
+        print "instance init...\n";
     }
 
     /**
@@ -36,16 +36,16 @@ class DemoTest extends TestCase {
      * @after
      */
     public function desctruct(): void {
-        print "desctruct...\n";
+        print "instance destructor...\n";
     }
     
     /**
      * 
      * @test
-     * @depends two
+     * @depends three
      */
     public function one(): void {
-        print "one...\n";
+        print "method one...\n";
     }
 
         
@@ -54,16 +54,24 @@ class DemoTest extends TestCase {
      * @test
      */
     public function two(): void {
-        print "two...\n";
+        print "method two...\n";
     }
 
             
     /**
      * 
      * @test
-     * @depends one
+     * @depends four
      */
     public function three(): void {
-        print "three...\n";
+        print "method three...\n";
+    }
+
+    /**
+     * @test
+     * 
+     */
+    public function four(): void {
+        print "method four...\n";
     }
 }
