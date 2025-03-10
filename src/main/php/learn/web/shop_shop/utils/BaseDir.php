@@ -60,7 +60,7 @@ class BaseDir extends ObjectI
         if( BaseDir::$baseDir === null ) 
             throw new \RuntimeException("Instantiation Exception: " . self::class);
 
-        return BaseDir::$baseDir->rootPath . DIRECTORY_SEPARATOR;
+        return BaseDir::$baseDir->rootPath;
     }
 
     public static function getInstance(

@@ -1,0 +1,71 @@
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: rgba(10, 10, 30, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+a[id*="link"] {
+    color: #aa74fc;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary);
+}
+
+.login-btn {
+    background: var(--primary);
+    color: var(--text);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.login-btn:hover {
+    background: var(--accent);
+}
+
+.btn-left {
+
+    display: flex;
+    place-items: center;
+    gap: 1.2rem;
+    background-color: transparent;
+}
+
+.logo span {
+
+    color: var(--text);
+}

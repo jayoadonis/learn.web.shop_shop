@@ -21,7 +21,7 @@ abstract class Router extends ObjectI
     protected static array $ROUTES;
 
     public function __construct(
-        public readonly Layout $layout
+        public Layout $layout
     ) {}
 
     /**
@@ -123,13 +123,30 @@ abstract class Router extends ObjectI
         //REM: (canonnical name) A Subclass of models\Controller.php
         elseif (is_array($controller) && ($arrayControllerCount = count($controller)) > 0) {
 
-            if ($arrayControllerCount === 1) {
+            if ($arrayControllerCount <= 2 ) {
 
-                /**
-                 * 
-                 * @var class-string $class
-                 */
                 [$class] = $controller;
+
+                if( $arrayControllerCount == 2 ) {
+                    /**
+                     * 
+                     * @var class-string $class
+                     */
+                    [$class, $layoutClass] = $controller;
+
+                    if( class_exists($layoutClass) && is_subclass_of($layoutClass, Layout::class) ) {
+
+                        $this->layout = new $layoutClass($this->layout->title);
+
+                    } else {
+
+                        [$class, $memberFunction] = $controller;
+                        //REM: [TODO] .|. Not yet supported...
+                        throw new \Exception("Not yet supported 'compound' reflection?");
+                    }
+                }
+
+
 
                 if (class_exists($class) && is_subclass_of($class, Controller::class)) {
 
@@ -150,10 +167,6 @@ abstract class Router extends ObjectI
 
                     return;
                 }
-            } else {
-                [$class, $memberFunction] = $controller;
-                //REM: [TODO] .|. Not yet supported...
-                throw new \Exception("Not yet supported 'compound' reflection?");
             }
         }
 
@@ -206,7 +219,7 @@ abstract class Router extends ObjectI
 
                 foreach ($paramPaths as $key => $value) {
                     $sanitizedRequestParamPaths[htmlspecialchars($key, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')]
-                        = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+                        = htmlspecialchars( $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
                 }
 
                 $routeData->param?->paramPath->set($sanitizedRequestParamPaths);

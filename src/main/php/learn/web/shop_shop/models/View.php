@@ -16,8 +16,14 @@ abstract class View extends ObjectI implements IRenderer {
     public function __construct(
         public mixed $controller,
     ) {
-
+        $this->init();
     }
+
+    /**
+     * 
+     * initializer
+     */
+    protected abstract function init(): void;
 
     public abstract function render(): View|string|false;
 }

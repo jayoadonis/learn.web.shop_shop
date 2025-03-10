@@ -23,6 +23,8 @@ enum GymStoneURL : int {
     case HOME = 1;
     case PRODUCT = 2;
     case PROFILE = 4;
+    case SIGNING = 8;
+    case MUSIC_APP = 16;
 
     case PAGE_NOT_FOUND = 64;
 
@@ -56,6 +58,8 @@ enum GymStoneURL : int {
             self::HOME => "/home",
             self::PRODUCT => "/product",
             self::PROFILE => "/profile",
+            self::SIGNING => "/signing",
+            self::MUSIC_APP => "/music-app",
             default => "/404"
         };
     }
@@ -67,7 +71,7 @@ enum GymStoneURL : int {
 
             self::HOME => (object)["demoButton" => "demo-button"],
             self::PRODUCT => (object)["create" => "create", "edit" => "edit"],
-            self::PROFILE => (object)["edit" => "edit"]
+            self::PROFILE => (object)["edit" => "edit"],
             
         };
     }

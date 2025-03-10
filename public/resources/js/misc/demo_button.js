@@ -60,3 +60,11 @@ document.getElementById('toggle').addEventListener('change', function() {
 document.getElementById('imageButton').addEventListener('click', function() {
     alert('Image Button clicked!');
 });
+
+
+document.getElementById("power_slider").addEventListener("change", function(event) {
+    
+    document.getElementById("txt_slider").innerHTML = event.target.value;
+
+    updateOutput(`Slider: ${this.value}`)
+});

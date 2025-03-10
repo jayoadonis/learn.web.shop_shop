@@ -23,6 +23,14 @@ class HomeView extends View {
 
         parent::__construct($controller);
     }
+    
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    protected function init(): void {
+        
+    }
 
     public function render(): View|string|false {
 

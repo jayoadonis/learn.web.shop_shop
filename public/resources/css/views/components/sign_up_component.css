@@ -26,6 +26,7 @@
         outline: none;
         padding: 0.50rem 0.50rem;
         border: 0.20rem solid var(--color-success);
+        color: var(--color-text-primary);
         cursor: pointer;
     }
 
@@ -34,20 +35,20 @@
     }
 
     input::placeholder {
-        color: var(--color-text-secondary);
+        color: var(--color-text-primary);
     }
 
     input:focus {
         border-color: var(--color-accent-secondary);
     }
 
-    button[signUp] {
+    button[data-btn-sign-up] {
         padding: 0.5rem 0;
         border-radius: 2.5rem;
         background-color: var(--color-background-secondary);
     }
 
-    button[signUp]:hover {
+    button[data-btn-sign-up]:hover {
         color: var(--color-background-secondary);
         background-color: var(--color-success);
         border-color: var(--color-background-secondary);

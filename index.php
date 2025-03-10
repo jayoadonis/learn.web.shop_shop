@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 require_once(__DIR__ . "/src/main/php/learn/web/shop_shop/prefetch.php");
 
+
+
 use learn\web\shop_shop\controllers\HomeController;
 use learn\web\shop_shop\controllers\SigningController;
+use learn\web\shop_shop\misc\music_app\controllers\MusicController;
 use learn\web\shop_shop\models\GymStoneURL;
 use learn\web\shop_shop\models\Entity;
 use learn\web\shop_shop\models\Layout;
@@ -13,11 +16,28 @@ use learn\web\shop_shop\utils\BaseDir;
 use learn\web\shop_shop\utils\Session;
 use learn\web\shop_shop\utils\SimpleRouter;
 use learn\web\shop_shop\views\layouts\SimpleLayout;
-
+use learn\web\shop_shop\misc\music_app\views\layouts\SimpleMusicLayout;
 
 // Session::set( new User( "101", "user_123", "user_123@email.io") );
 
+// print_r( Session::get(User::class)->getEmail() );
+
+// Session::setWithExplicitId("user_1", new User( "102", "user_123", "user_122223@email.io"));
+
+// print_r( Session::get( "user_1" )?->getEmail() );
+
+// Session::clearAll();
+
 $simpleRouter = new SimpleRouter( new SimpleLayout("prototype-i") );
+
+
+$simpleRouter->get( "/",                                    [HomeController::class]);
+$simpleRouter->get( GymStoneURL::HOME->get(),               [HomeController::class]);
+$simpleRouter->get( GymStoneURL::HOME->get("{id}"),         [HomeController::class]);
+$simpleRouter->get( GymStoneURL::HOME->get("{id}/{verb}"),  [HomeController::class]);
+
+$simpleRouter->get("/music-app",                            [MusicController::class, SimpleMusicLayout::class]);
+
 
 $simpleRouter->get("/closure-way", function( Layout $layout ): string {
 
@@ -37,11 +57,6 @@ $simpleRouter->get("/closure-way", function( Layout $layout ): string {
     </div>
     HTML;
 });
-
-$simpleRouter->get( "/",                                    [HomeController::class]);
-$simpleRouter->get( GymStoneURL::HOME->get(),               [HomeController::class]);
-$simpleRouter->get( GymStoneURL::HOME->get("{id}"),         [HomeController::class]);
-$simpleRouter->get( GymStoneURL::HOME->get("{id}/{verb}"),  [HomeController::class]);
 
 
 $productFC = function(Layout $layout): string {
@@ -81,6 +96,7 @@ $simpleRouter->get("/product/{id}", $productFC );
 $simpleRouter->get("/product/{id}/{verb}", $productFC );
 
 $simpleRouter->get("/signing", [SigningController::class]);
+
 
 $simpleRouter->dispatch();
 

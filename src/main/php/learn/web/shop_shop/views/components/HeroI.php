@@ -13,6 +13,19 @@ use learn\web\shop_shop\utils\BaseDir;
  */
 class HeroI extends View {
 
+
+    /**
+     *  
+     * {@inheritdoc}
+     */ 
+    protected function init(): void {
+
+    }
+
+    /**
+     *  
+     * {@inheritdoc}
+     */ 
     public function render(): View|string|false {
 
         $this->controller->layout->cssManager->add("css-hero-i-component", BaseDir::getResource("/public/resources/css/components/hero_i_component.css"));

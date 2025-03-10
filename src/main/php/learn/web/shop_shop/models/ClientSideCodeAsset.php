@@ -6,6 +6,7 @@ namespace learn\web\shop_shop\models;
 
 abstract class ClientSideCodeAsset extends ObjectI {
 
+
     /**
      * 
      * @var array<string,string> $assets
@@ -25,8 +26,9 @@ abstract class ClientSideCodeAsset extends ObjectI {
      * 
      * Echo and then clean js file script resources
      */
-    public function useIt(): void {
+    public function exhaustIt(): void {
         $this->echoIt();
+        flush(); //REM: [TODO] .|. This will immediately response back the "Output Buff" to the client side...
         $this->clean();
     }
 
@@ -40,7 +42,7 @@ abstract class ClientSideCodeAsset extends ObjectI {
 
         if( ! array_key_exists($key, $this->assets) ) {
 
-            $this->assets[$key] = $assetPath;
+            $this->assets[$key] = trim( $assetPath, " /\\");
             $this->size++;
 
             return true;

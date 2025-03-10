@@ -14,6 +14,14 @@ use learn\web\shop_shop\models\Controller;
  */
 class SignIn extends View {
 
+    
+    /**
+     * 
+     * @inheritdoc
+     */
+    protected function init(): void {
+        
+    }
 
     /**
      * 
@@ -34,4 +42,5 @@ class SignIn extends View {
 
         return ob_get_clean();
     }
+
 }

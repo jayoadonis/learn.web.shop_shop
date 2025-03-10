@@ -19,6 +19,14 @@ class DashboardView extends View {
     ) {
         parent::__construct( $ctrl );
     }
+    
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    protected function init(): void {
+        
+    }
 
     /**
      * 

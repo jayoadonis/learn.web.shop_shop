@@ -17,7 +17,7 @@
 
     /**REM: BEGIN: color palette (LIGHT_MODE)*/
     --color-text-primary: #1D1B38;
-    --color-text-secondary: #4E4C67;
+    --color-text-secondary: #ffffff;
 
     --color-background-primary: #F5F7FA;
     --color-background-secondary: #E3E5E8;
@@ -58,12 +58,12 @@
 
 }
 
-:root[color-theme="dark"] {
+:root[data-color-theme="dark"] {
 
 
     /**REM: BEGIN: color palette (DARK_MODE)*/
     --color-text-primary: #E0E0E0;
-    --color-text-secondary: #A5A5A5;
+    --color-text-secondary: #ececec;
 
     --color-background-primary: #14121E;
     --color-background-secondary: #1E1A2E;
@@ -98,7 +98,7 @@
 }
 
 body {
-    margin: 0;
+    margin: auto 0;
     padding: 0.5rem;
     display: flex;
     flex-direction: column;

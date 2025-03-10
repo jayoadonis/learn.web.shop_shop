@@ -10,7 +10,7 @@
 
 }
 
-.el-toggle-theme-slider {
+.el-toggle-theme-container .el-toggle-theme-slider {
     position: absolute;
     /* width: fit-content; */
     min-width: 50%;

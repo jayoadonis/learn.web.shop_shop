@@ -13,6 +13,16 @@ use learn\web\shop_shop\utils\BaseDir;
  */
 class SignUpComponent extends View {
 
+    
+    
+    /**
+     * 
+     * @inheritdoc
+     */
+    protected function init(): void {
+        
+    }
+
     /**
      * 
      * @inheritdoc
@@ -21,6 +31,10 @@ class SignUpComponent extends View {
 
         $this->controller->layout->cssManager->add(
             "css-sign-up-component", BaseDir::getResource("/public/resources/css/views/components/sign_up_component.css")
+        );
+
+        $this->controller->layout->jsManager->add(
+            "js-store-api", BaseDir::getResource("/public/resources/js/utils/apis/users/store_api.js")
         );
 
         ob_start();
@@ -41,7 +55,13 @@ class SignUpComponent extends View {
                         <input name="civil_status" type="text" placeholder="Civil Status"/>
                     </div>
 
-                    <button type="button" signUp>Sign Up</button>
+                    <button id="html-btn-sign-up" 
+                    type="button" 
+                    data-btn-sign-up 
+                    data-store
+                    class="el-btn-sign-up">
+                        Sign Up
+                    </button>
                 </form>
             </div>
         <?php

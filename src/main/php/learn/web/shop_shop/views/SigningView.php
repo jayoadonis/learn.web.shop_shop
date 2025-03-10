@@ -8,6 +8,14 @@ use learn\web\shop_shop\views\components\SignUpComponent;
 
 class SigningView extends View {
 
+    
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    protected function init(): void {
+        
+    }
 
     /**
      * 
@@ -19,7 +27,7 @@ class SigningView extends View {
 
         ob_start();
         ?>
-            <div id="html-signing-view" style="">
+            <div id="html-signing-view">
                 <?=$signUpViewRender?>
             </div>
         <?php

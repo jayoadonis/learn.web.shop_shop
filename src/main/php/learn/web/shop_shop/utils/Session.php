@@ -19,19 +19,37 @@ class Session extends ObjectI {
      * @return void
      */
     public static function set(mixed $sessionable): void {
+        // if( session_status() === PHP_SESSION_NONE )
+        //     session_start();
+        // $_SESSION[$sessionable->getType()] = $sessionable;
+
+        self::setWithExplicitId( $sessionable->getType(), $sessionable );
+    }
+
+    /**
+     * 
+     * @template V of ISessionable | mixed
+     * @template K of string | class-string<V>
+     * @param V $data
+     * @param K $id
+     */
+    public static function setWithExplicitId( 
+        mixed $id,
+        mixed $data
+    ): void {
         if( session_status() === PHP_SESSION_NONE )
             session_start();
-        $_SESSION[$sessionable->getType()] = $sessionable;
+        $_SESSION[$id] = $data;
     }
 
     /**
      * Retrieves a sessionable object from the session.
      *
-     * @template T of ISessionable
-     * @param class-string<T> $type A canonical classname identifying the sessionable type.
+     * @template T of ISessionable | object
+     * @param string|class-string<T> $type A canonical classname identifying the sessionable type.
      * @return T|null Returns the sessionable object if found, otherwise null.
      */
-    public static function get(string $type): mixed {
+    public static function get(mixed $type): mixed {
         if( session_status() === PHP_SESSION_NONE )
             session_start();
         return $_SESSION[$type] ?? null;

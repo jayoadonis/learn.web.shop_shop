@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace learn\web\shop_shop\views\layouts;
+namespace learn\web\shop_shop\misc\music_app\views\layouts;
 
 use learn\web\shop_shop\controllers\HeaderController;
 use learn\web\shop_shop\models\IRenderer;
@@ -10,7 +10,7 @@ use learn\web\shop_shop\models\Layout;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\BaseDir;
 
-class SimpleLayout extends Layout
+class SimpleMusicLayout extends Layout
 {
 
 
@@ -76,7 +76,14 @@ class SimpleLayout extends Layout
                 </section>
 
                 <footer>
-                    <h1>Footer...</h1>
+                    <div class="footer-content">
+                        <p>Come enjoy with music with us</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
                 </footer>
 
                 <script id="js-util-hasher" src="/public/resources/js/utils/hasher.js"></script>

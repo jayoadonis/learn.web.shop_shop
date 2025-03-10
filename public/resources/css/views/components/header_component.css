@@ -1,0 +1,9 @@
+#el-id-header-component {
+
+    #logo, #logo h1 {
+
+        display: block;
+        text-decoration: none;
+        width: fit-content;
+    }
+}
