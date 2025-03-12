@@ -50,7 +50,7 @@ class MusicHeaderComponent extends Component
             </div>
 
             <div class="btn-left">
-                <button class="login-btn">Login</button>
+                <button type="button" class="login-btn">Login</button>
                 <?= $toggleThemeComponent->render() ?>
             </div>
             

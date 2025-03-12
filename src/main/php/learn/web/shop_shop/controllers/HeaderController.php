@@ -20,21 +20,17 @@ class HeaderController extends Controller {
     public function render(): View|string|false {
 
 
-        $isMusicAppURL = ( $this->layout->routeData->path === GymStoneURL::MUSIC_APP->getRootPath() );
+        // $isMusicAppURL = ( $this->layout->routeData->path === GymStoneURL::MUSIC_APP->getRootPath() );
 
         $normalHeader = new Header($this);
 
-        $musicHeader = new MusicHeaderComponent($this);
+        // $musicHeader = new MusicHeaderComponent($this);
 
         ob_start();
 
         ?>
         <header id="el-header-ctrl" class="<?=$this?>">
-            <?php if( !$isMusicAppURL ): ?>
-                <?= $normalHeader->render() ?>
-            <?php else:?>
-                <?= $musicHeader->render() ?>
-            <?php endif;?>
+            <?= $normalHeader->render() ?>
         </header>
         <?php
 

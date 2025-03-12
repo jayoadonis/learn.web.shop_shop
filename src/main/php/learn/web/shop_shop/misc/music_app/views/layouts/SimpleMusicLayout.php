@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace learn\web\shop_shop\misc\music_app\views\layouts;
 
-use learn\web\shop_shop\controllers\HeaderController;
+use learn\web\shop_shop\misc\music_app\controllers\SImpleMusicHeaderController;
 use learn\web\shop_shop\models\IRenderer;
 use learn\web\shop_shop\models\Layout;
 use learn\web\shop_shop\models\View;
@@ -42,7 +42,8 @@ class SimpleMusicLayout extends Layout
         $this->jsManager->add("js-toast_i", BaseDir::getResource("/public/resources/js/view/components/toast_i.js"));
         
         
-        $headerCtrl = (new HeaderController($this))->render();
+        // $headerCtrl = (new HeaderController($this))->render();
+        $musicHeaderCtrl = (new SImpleMusicHeaderController($this))->render();
 
         //REM: Contronller rendering...
         $outlet = ($this->outlet instanceof IRenderer) ? $this->outlet->render() : $this->outlet;
@@ -69,7 +70,7 @@ class SimpleMusicLayout extends Layout
 
             <body id="el-simple-layout">
                 
-                <?= $headerCtrl ?>
+                <?= $musicHeaderCtrl ?>
 
                 <section id="el-main">
                     <?= $outlet ?>
