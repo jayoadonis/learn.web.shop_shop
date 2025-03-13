@@ -28,7 +28,7 @@ class HeroI extends View {
      */ 
     public function render(): View|string|false {
 
-        $this->controller->layout->cssManager->add("css-hero-i-component", BaseDir::getResource("/public/resources/css/components/hero_i_component.css"));
+        $this->controller->layout->cssManager->add("css-hero-i-component", BaseDir::getResource("/public/resources/css/views/components/hero_i_component.css"));
 
         ob_start();
 

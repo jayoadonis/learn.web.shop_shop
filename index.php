@@ -41,7 +41,7 @@ $simpleRouter->get("/music-app",                            [MusicController::cl
 
 $simpleRouter->get("/closure-way", function( Layout $layout ): string {
 
-    $layout->cssManager->add("css-closure-way-view", BaseDir::getResource("/public/resources/css/closure_way_view.css"));
+    $layout->cssManager->add("css-closure-way-view", BaseDir::getResource("/public/resources/css/views/closure_way_view.css"));
 
     $paramPathID = ($layout->routeData->param?->paramPath->get("id")??"N/a");
     $paramPathVERB = ($layout->routeData->param?->paramPath->get("verb")??"N/a") ;
@@ -61,7 +61,7 @@ $simpleRouter->get("/closure-way", function( Layout $layout ): string {
 
 $productFC = function(Layout $layout): string {
 
-    $layout->cssManager->add("css-product-fc", BaseDir::getResource("/public/resources/css/view/product_view.css"));
+    $layout->cssManager->add("css-product-fc", BaseDir::getResource("/public/resources/css/views/product_view.css"));
 
     $paramPathID = $layout->routeData->param?->paramPath->get("id")??"N/a";
     $paramPathVERB = $layout->routeData->param?->paramPath->get("verb")??"N/a";

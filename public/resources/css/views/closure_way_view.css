@@ -2,4 +2,7 @@
     h1 {
         color: lime;
     }
+    h3 {
+        color: var(--color-text-primary);
+    }
 }

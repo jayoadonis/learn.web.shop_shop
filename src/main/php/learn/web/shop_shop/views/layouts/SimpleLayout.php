@@ -9,6 +9,7 @@ use learn\web\shop_shop\models\IRenderer;
 use learn\web\shop_shop\models\Layout;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\BaseDir;
+use learn\web\shop_shop\utils\Session;
 
 class SimpleLayout extends Layout
 {
@@ -26,25 +27,40 @@ class SimpleLayout extends Layout
     public function render(): View|string|false
     {
 
-        //REM: [TODO] .|. Refactor it later...
-        if( session_status() === PHP_SESSION_NONE ) {
-            session_start();
-        }
-        //REM: [TODO] .|. Refactor it later...
-        if ( !isset($_SESSION['theme']) ) {
-            $_SESSION['theme'] = 'light';
+        // //REM: [TODO] .|. Refactor it later...
+        // if( session_status() === PHP_SESSION_NONE ) {
+        //     session_start();
+        // }
+        // //REM: [TODO] .|. Refactor it later...
+        // if ( !isset($_SESSION['theme']) ) {
+        //     $_SESSION['theme'] = 'light';
+        // }
+
+        if( Session::get("theme") === null ) {
+            
+            Session::setWithExplicitId("theme", "light");
         }
 
-        $this->cssManager->add("css-toast", BaseDir::getResource("/public/resources/css/components/toast.css"));
-        $this->jsManager->add("js-toast", BaseDir::getResource("/public/resources/js/view/components/toast.js"));
+        $this->jsManager->add(
+            "js-utils-global",
+            BaseDir::getResource("/public/resources/js/utils/global.js")
+        );
+
+        $this->jsManager->add(
+            "js-utils-hasher",
+            BaseDir::getResource("/public/resources/js/utils/hasher.js")
+        );
+
+        $this->cssManager->add("css-toast", BaseDir::getResource("/public/resources/css/views/components/toast.css"));
+        $this->jsManager->add("js-toast", BaseDir::getResource("/public/resources/js/views/components/toast.js"));
         
-        $this->cssManager->add("css-toast_i", BaseDir::getResource("/public/resources/css/components/toast_i.css"));
-        $this->jsManager->add("js-toast_i", BaseDir::getResource("/public/resources/js/view/components/toast_i.js"));
+        $this->cssManager->add("css-toast_i", BaseDir::getResource("/public/resources/css/views/components/toast_i.css"));
+        $this->jsManager->add("js-toast_i", BaseDir::getResource("/public/resources/js/views/components/toast_i.js"));
         
         
         $headerCtrl = (new HeaderController($this))->render();
 
-        //REM: Contronller rendering...
+        //REM: Contronller rendering main...
         $outlet = ($this->outlet instanceof IRenderer) ? $this->outlet->render() : $this->outlet;
 
         ob_start();
@@ -52,9 +68,7 @@ class SimpleLayout extends Layout
             <!DOCTYPE html>
 
             <html lang="en" 
-            data-color-theme="<?=htmlspecialchars($_SESSION["theme"], ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8')?>">
-
-            <!-- <html lang="en"> -->
+            data-color-theme="<?=htmlspecialchars(Session::get("theme")??"light", ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8')?>">
 
             <head>
                 <meta charset="UTF-8">
@@ -79,7 +93,6 @@ class SimpleLayout extends Layout
                     <h1>Footer...</h1>
                 </footer>
 
-                <script id="js-util-hasher" src="/public/resources/js/utils/hasher.js"></script>
                 <?= $this->jsManager->exhaustIt() ?>
             </body>
 

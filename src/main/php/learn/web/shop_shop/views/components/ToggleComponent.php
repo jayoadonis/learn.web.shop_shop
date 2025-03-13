@@ -20,12 +20,12 @@ class ToggleComponent extends Component {
         
         $this->controller->layout->cssManager->add(
             "css-toggle-theme",
-            BaseDir::getResource("/public/resources/css/toggle_theme.css")
+            BaseDir::getResource("/public/resources/css/views/components/toggle_theme.css")
         );
 
         $this->controller->layout->jsManager->add(
             "js-toggle-theme",
-            BaseDir::getResource("/public/resources/js/toggle_theme.js")
+            BaseDir::getResource("/public/resources/js/views/components/toggle_theme.js")
         );
 
     }

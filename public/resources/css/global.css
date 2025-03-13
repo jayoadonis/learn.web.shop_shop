@@ -58,7 +58,7 @@
 
 }
 
-:root[data-color-theme="dark"] {
+:root[data-color-theme^="dark"] {
 
 
     /**REM: BEGIN: color palette (DARK_MODE)*/

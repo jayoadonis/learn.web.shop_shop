@@ -28,7 +28,7 @@ class Session extends ObjectI {
 
     /**
      * 
-     * @template V of ISessionable | mixed
+     * @template V of ISessionable | object | string | null
      * @template K of string | class-string<V>
      * @param V $data
      * @param K $id
@@ -37,21 +37,25 @@ class Session extends ObjectI {
         mixed $id,
         mixed $data
     ): void {
+
         if( session_status() === PHP_SESSION_NONE )
             session_start();
+
         $_SESSION[$id] = $data;
     }
 
     /**
      * Retrieves a sessionable object from the session.
      *
-     * @template T of ISessionable | object
+     * @template T of ISessionable | object | string | null
      * @param string|class-string<T> $type A canonical classname identifying the sessionable type.
      * @return T|null Returns the sessionable object if found, otherwise null.
      */
     public static function get(mixed $type): mixed {
+        
         if( session_status() === PHP_SESSION_NONE )
             session_start();
+
         return $_SESSION[$type] ?? null;
     }
 
