@@ -16,7 +16,7 @@ class ToggleComponent extends Component {
      * 
      * {@inheritdoc}
      */
-    protected function init(): void {
+    public function init(): void {
         
         $this->controller->layout->cssManager->add(
             "css-toggle-theme",

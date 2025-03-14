@@ -21,13 +21,14 @@ class LandingPage extends View
     ) {
         parent::__construct($musicCtrl);
     }
-
     
     /**
      * 
      * {@inheritdoc}
      */
-    protected function init(): void {
+    public function init(): void {
+        
+        $this->controller->layout->title .= " ~ MUSIC_APP";
 
         $this->controller->layout->cssManager->add(
             "css-music-app-view",
@@ -60,7 +61,8 @@ class LandingPage extends View
                     <button class="cta-button">Start Listening</button>
                 </div>
                 <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80" alt="Concert crowd">
+                    <!--REM: https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80 -->
+                    <img src="/public/resources/img/music_app/hero/hero_000_w=800&q=80.jpg" alt="Concert crowd">
                 </div>
             </header>
 
@@ -91,16 +93,17 @@ class LandingPage extends View
                 </div>
                 <div class="artist-grid">
                     <div class="artist-card">
-                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&q=80" alt="Artist 1">
+                        <!--REM: https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80 -->
+                        <img src="/public/resources/img/music_app/artist/card_000_w=500&q=80.jpg" alt="Artist 1">
                     </div>
                     <div class="artist-card">
-                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80" alt="Artist 2">
+                        <img src="/public/resources/img/music_app/artist/card_001_w=500&q=80.jpg" alt="Artist 2">
                     </div>
                     <div class="artist-card">
-                        <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=500&q=80" alt="Artist 3">
+                        <img src="/public/resources/img/music_app/artist/card_002_w=500&q=80.jpg" alt="Artist 3">
                     </div>
                     <div class="artist-card">
-                        <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?w=500&q=80" alt="Artist 4">
+                        <img src="/public/resources/img/music_app/artist/card_003_w=500&q=80.jpg" alt="Artist 4">
                     </div>
                 </div>
                 <button class="explore-btn">Explore More</button>

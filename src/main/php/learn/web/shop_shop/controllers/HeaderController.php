@@ -12,6 +12,15 @@ use learn\web\shop_shop\views\components\Header;
 class HeaderController extends Controller {
 
 
+
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    public function init(): void {
+
+    }
+
     /**
      * {@inheritdoc}
      * 

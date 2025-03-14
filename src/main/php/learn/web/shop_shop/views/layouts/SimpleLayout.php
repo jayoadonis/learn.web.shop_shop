@@ -20,6 +20,29 @@ class SimpleLayout extends Layout
 
         parent::__construct($title);
     }
+    
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    public function init(): void {
+
+        $this->jsManager->add(
+            "js-utils-global",
+            BaseDir::getResource("/public/resources/js/utils/global.js")
+        );
+
+        $this->jsManager->add(
+            "js-utils-hasher",
+            BaseDir::getResource("/public/resources/js/utils/hasher.js")
+        );
+
+        $this->cssManager->add("css-toast", BaseDir::getResource("/public/resources/css/views/components/toast.css"));
+        $this->jsManager->add("js-toast", BaseDir::getResource("/public/resources/js/views/components/toast.js"));
+        
+        $this->cssManager->add("css-toast_i", BaseDir::getResource("/public/resources/css/views/components/toast_i.css"));
+        $this->jsManager->add("js-toast_i", BaseDir::getResource("/public/resources/js/views/components/toast_i.js"));
+    }
 
     /**
      * @inheritDoc Layout::render(): View|string|false
@@ -40,22 +63,6 @@ class SimpleLayout extends Layout
             
             Session::setWithExplicitId("theme", "light");
         }
-
-        $this->jsManager->add(
-            "js-utils-global",
-            BaseDir::getResource("/public/resources/js/utils/global.js")
-        );
-
-        $this->jsManager->add(
-            "js-utils-hasher",
-            BaseDir::getResource("/public/resources/js/utils/hasher.js")
-        );
-
-        $this->cssManager->add("css-toast", BaseDir::getResource("/public/resources/css/views/components/toast.css"));
-        $this->jsManager->add("js-toast", BaseDir::getResource("/public/resources/js/views/components/toast.js"));
-        
-        $this->cssManager->add("css-toast_i", BaseDir::getResource("/public/resources/css/views/components/toast_i.css"));
-        $this->jsManager->add("js-toast_i", BaseDir::getResource("/public/resources/js/views/components/toast_i.js"));
         
         
         $headerCtrl = (new HeaderController($this))->render();
@@ -76,7 +83,7 @@ class SimpleLayout extends Layout
                 
                 <link id="css-global" rel="stylesheet" href="/public/resources/css/global.css">
                 
-                <?= $this->cssManager->echoIt() ?>
+                <?= $this->cssManager->exhaustIt() ?>
                 
                 <title><?= $this->title ?></title>
             </head>

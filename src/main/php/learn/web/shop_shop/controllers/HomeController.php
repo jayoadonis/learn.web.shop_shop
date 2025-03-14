@@ -28,6 +28,14 @@ class HomeController extends Controller
     }
 
     /**
+     * 
+     * {@inheritdoc}
+     */
+    public function init(): void {
+
+    }
+
+    /**
      * @inheritDoc Controller::render()
      */
     public function render(): View|String|false

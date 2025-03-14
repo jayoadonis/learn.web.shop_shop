@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 require_once(__DIR__ . "/../../../src/main/php/learn/web/shop_shop/prefetch.php");
 
-
 use learn\web\shop_shop\utils\Session;
 
 if( session_status() === PHP_SESSION_NONE )

@@ -125,12 +125,17 @@ abstract class Router extends ObjectI
 
             if ($arrayControllerCount <= 2 ) {
 
+                /**
+                 * 
+                 * @var class-string<Controller> $class
+                 */
                 [$class] = $controller;
 
                 if( $arrayControllerCount == 2 ) {
                     /**
                      * 
-                     * @var class-string $class
+                     * @var class-string<Controller> $class
+                     * @var class-string<Layout> $layoutClass
                      */
                     [$class, $layoutClass] = $controller;
 
@@ -140,6 +145,11 @@ abstract class Router extends ObjectI
 
                     } else {
 
+                        //REM: i.e. [HomeController::class, "index"]
+                        /**
+                         * @var class-string<controller> $class
+                         * @var string $memberFunction
+                         */
                         [$class, $memberFunction] = $controller;
                         //REM: [TODO] .|. Not yet supported...
                         throw new \Exception("Not yet supported 'compound' reflection?");

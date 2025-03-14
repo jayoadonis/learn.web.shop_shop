@@ -16,6 +16,15 @@ class DashboardController extends Controller {
     ) {
         parent::__construct($layout);
     }
+
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    public function init(): void {
+
+    }
+
     /**
      * 
      * @inheritDoc

@@ -21,6 +21,14 @@ class SigningController extends Controller {
 
     /**
      * 
+     * {@inheritdoc}
+     */
+    public function init(): void {
+
+    }
+
+    /**
+     * 
      * @inheritdoc
      */
     public function render(): View|string|false {
@@ -31,14 +39,14 @@ class SigningController extends Controller {
             // return false;
         }
 
-        $signingViewRender = (new SigningView($this))->render();
+        $signingViewRender = (new SigningView($this));
 
 
         ob_start();
 
         ?>
             <div id="html-signing-ctrl">
-                <?= $signingViewRender ?>
+                <?= $signingViewRender->render() ?>
             </div>
         <?php
 

@@ -15,42 +15,58 @@ class BaseDir extends ObjectI
     private static BaseDir|null $baseDir = null;
 
     private readonly string $rootPath;
-    private array $blackListedPaths;
-    private array $whiteListedPaths;
 
+    /**
+     * 
+     * @var array<string> 
+     */
+    private array $blackListedFilePaths;
+
+    /**
+     * 
+     * @var array<string>
+     */
+    private array $whiteListedFilePaths;
+
+    /**
+     * 
+     * @param array<string> $blackListedFilePaths
+     * @param array<string> $whiteListedFilePaths
+     */
     private function __construct(
         string $rootPath,
-        array $blackListedPaths = [],
-        array $whiteListedPaths = []
+        array $blackListedFilePaths = [],
+        array $whiteListedFilePaths = []
     ) {
 
         $realRootPath = realpath($rootPath);
 
         if ($realRootPath === false || !is_dir($realRootPath))
             throw new \RuntimeException("Invalid Base Directory.");
-
-        $this->rootPath = rtrim($realRootPath, " \n\r\t\v/\\");
-
-        $this->blackListedPaths = [];
-
+            
         $charStrip = " \n\r\t\v/\\";
 
-        foreach ($blackListedPaths as $blackListedPath) {
+        $this->rootPath = rtrim($realRootPath, $charStrip);
+
+        $this->blackListedFilePaths = [];
+        $this->whiteListedFilePaths = [];
+
+        foreach ($blackListedFilePaths as $blackListedPath) {
             $blackListedFullPath = realpath(
                 $this->rootPath . DIRECTORY_SEPARATOR
                     . ltrim($blackListedPath, $charStrip)
             );
             if ($blackListedFullPath !== false)
-                $this->blackListedPaths[] = $blackListedFullPath;
+                $this->blackListedFilePaths[] = $blackListedFullPath;
         }
 
-        foreach ($whiteListedPaths as $whiteListedPath) {
+        foreach ($whiteListedFilePaths as $whiteListedPath) {
             $whiteListedFullPath = realpath(
                 $this->rootPath . DIRECTORY_SEPARATOR
                     . ltrim($whiteListedPath, $charStrip)
             );
             if ($whiteListedFullPath !== false)
-                $this->whiteListedPaths[] = $whiteListedFullPath;
+                $this->whiteListedFilePaths[] = $whiteListedFullPath;
         }
 
     }
@@ -65,44 +81,44 @@ class BaseDir extends ObjectI
 
     public static function getInstance(
         string $rootPath,
-        array|null $blackListedPaths = ["src/"],
-        array|null $whiteListedPaths = ["src/main/resources/"]
+        array|null $blackListedFilePaths = ["src/"],
+        array|null $whiteListedFilePaths = ["src/main/resources/"]
     ): BaseDir {
 
         if (BaseDir::$baseDir === null)
-            BaseDir::$baseDir = new BaseDir($rootPath, $blackListedPaths ?? [], $whiteListedPaths ?? []);
+            BaseDir::$baseDir = new BaseDir($rootPath, $blackListedFilePaths ?? [], $whiteListedFilePaths ?? []);
 
         return BaseDir::$baseDir;
     }
 
-    private function resolvePath(string $path): string
+    private function resolvePath(string $subPath): string
     {
-        if( str_starts_with($path, DIRECTORY_SEPARATOR) || preg_match("/^[a-zA-Z0-9 -]+:[\/\\\\]?+/i", $path) ) {
-            throw new \RuntimeException("Access denied: Absolute path is not allowed '{$path}'");
+        if( str_starts_with($subPath, DIRECTORY_SEPARATOR) || preg_match("/^[a-zA-Z0-9 -]+:[\/\\\\]?+/i", $subPath) ) {
+            throw new \RuntimeException("Access denied: Absolute path is not allowed '{$subPath}'");
         }
 
         $charStrip = " \n\r\t\v/\\";
 
         $fullPath = realPath(
             $this->rootPath . DIRECTORY_SEPARATOR
-            . ltrim( $path, $charStrip)
+            . ltrim( $subPath, $charStrip )
         );
 
         if( $fullPath === false || strpos($fullPath, $this->rootPath) !== 0 ) {
-            throw new \RuntimeException("Access denied: Invalid path '{$path}'");
+            throw new \RuntimeException("Access denied: Invalid path '{$subPath}'");
         }
 
-        foreach( $this->blackListedPaths as $blackListedPath ) {
+        foreach( $this->blackListedFilePaths as $blackListedPath ) {
             if( strpos($fullPath, $blackListedPath) === 0 ) {
                 $allowedPath = false;
-                foreach( $this->whiteListedPaths as $whiteListedPath ) {
+                foreach( $this->whiteListedFilePaths as $whiteListedPath ) {
                     if( strpos($fullPath, $whiteListedPath ) === 0 ) {
                         $allowedPath = true;
                         break;
                     }
                 }
                 if(!$allowedPath) {
-                    throw new \RuntimeException("Access denied: Path is black listed '{$path}'");
+                    throw new \RuntimeException("Access denied: Path is black listed '{$subPath}'");
                 }
             }
         }

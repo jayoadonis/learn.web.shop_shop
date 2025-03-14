@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace learn\web\shop_shop\misc\music_app\views\components;
 
 use learn\web\shop_shop\models\Component;
+use learn\web\shop_shop\models\Controller;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\BaseDir;
 use learn\web\shop_shop\views\components\ToggleComponent;
@@ -12,11 +13,18 @@ use learn\web\shop_shop\views\components\ToggleComponent;
 class MusicHeaderComponent extends Component
 {
 
+    public function __construct(
+        Controller $ctrl
+    ) {
+
+        parent::__construct($ctrl);
+    }
+
     /**
      * 
      * {@inheritdoc}
      */
-    protected function init(): void {
+    public function init(): void {
 
         $this->controller->layout->cssManager->add(
             "css-music-header-component",

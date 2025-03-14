@@ -13,7 +13,7 @@ class SigningView extends View {
      * 
      * {@inheritdoc}
      */
-    protected function init(): void {
+    public function init(): void {
         
     }
 

@@ -19,15 +19,7 @@ class SignUpComponent extends View {
      * 
      * @inheritdoc
      */
-    protected function init(): void {
-        
-    }
-
-    /**
-     * 
-     * @inheritdoc
-     */
-    public function render(): View|string|false {
+    public function init(): void {
 
         $this->controller->layout->cssManager->add(
             "css-sign-up-component", BaseDir::getResource("/public/resources/css/views/components/sign_up_component.css")
@@ -36,11 +28,18 @@ class SignUpComponent extends View {
         $this->controller->layout->jsManager->add(
             "js-store-api", BaseDir::getResource("/public/resources/js/utils/apis/users/store_api.js")
         );
+    }
+
+    /**
+     * 
+     * @inheritdoc
+     */
+    public function render(): View|string|false {
 
         ob_start();
         ?>
             <div id="html-sign-up-component" >
-                <form>
+                <form data-form-sign-up>
                     <div class="el-full-name">
                         <input name="first_name" type="text" placeholder="First Name"/>
                         <input name="middle_name" type="text" placeholder="Middle Name"/>

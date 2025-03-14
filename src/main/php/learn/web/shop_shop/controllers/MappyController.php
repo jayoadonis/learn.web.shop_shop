@@ -9,6 +9,7 @@ use learn\web\shop_shop\models\View;
 class MappyController extends Controller {
 
 
+
     /**
      * 
      * {@inheritdoc}

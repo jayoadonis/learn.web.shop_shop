@@ -9,6 +9,8 @@ abstract class Layout extends ObjectI implements IRenderer {
 
     public string $title;
 
+    public const ID = "debug:learn\web\shop_shop";
+
     //REM: [TODO] .|. Encapsulate this properly.
     protected IRenderer|string|false $outlet = false;
 
@@ -18,7 +20,7 @@ abstract class Layout extends ObjectI implements IRenderer {
      */
     // public array $css = [];
     
-    public CSSManager $cssManager;
+    public CSSManagerI $cssManager;
 
     // public array $js = [];
     public JSManager $jsManager;
@@ -27,11 +29,13 @@ abstract class Layout extends ObjectI implements IRenderer {
     public ?RouteData $routeData;
 
     public function __construct( 
-        string $title
+        string $title = self::ID
     ) {
         $this->title = $title;
-        $this->cssManager = new CSSManager();
+        $this->cssManager = new CSSManagerI();
         $this->jsManager = new JSManager();
+
+        $this->init();
     }
 
     public function setRouteData( ?RouteData $routeData ): void {

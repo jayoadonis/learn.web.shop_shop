@@ -5,6 +5,8 @@ namespace learn\web\shop_shop\models;
 
 
 interface IRenderer {
+    
+    public function init(): void;
 
     public function render(): View|string|false;
 }

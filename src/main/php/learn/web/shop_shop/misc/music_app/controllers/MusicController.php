@@ -20,6 +20,13 @@ class MusicController extends Controller {
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function init(): void {
+        
+    }
+
+    /**
      * 
      * {@inheritdoc}
      */

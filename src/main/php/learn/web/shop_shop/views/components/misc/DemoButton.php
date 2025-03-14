@@ -11,13 +11,14 @@ use learn\web\shop_shop\models\View;
 class DemoButton extends Component
 {
 
-    
     /**
      * 
      * {@inheritdoc}
      */
-    protected function init(): void {
-        
+    public function init(): void {
+
+        $this->controller->layout->cssManager->add("css-demo-button", "public/resources/css/misc/demo_button.css");
+        $this->controller->layout->jsManager->add("js-demo-button", "public/resources/js/misc/demo_button.js");
     }
 
     /**
@@ -26,9 +27,6 @@ class DemoButton extends Component
      */
     public function render(): View|string|false
     {
-
-        $this->controller->layout->cssManager->add("css-demo-button", "public/resources/css/misc/demo_button.css");
-        $this->controller->layout->jsManager->add("js-demo-button", "public/resources/js/misc/demo_button.js");
 
         ob_start();
 ?>

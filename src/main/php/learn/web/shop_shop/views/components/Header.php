@@ -26,7 +26,7 @@ class Header extends View {
     /**
      * {@inheritdoc}
      */
-    protected function init(): void {
+    public function init(): void {
 
         $this->controller->layout->cssManager->add(
             "css-header-component",
