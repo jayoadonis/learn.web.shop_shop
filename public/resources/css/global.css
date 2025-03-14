@@ -97,6 +97,7 @@
         /* background: rgb(0 100 0/0.1) !important; */
 }
 
+
 body {
     margin: auto 0;
     padding: 0.5rem;
@@ -122,6 +123,10 @@ span {
 /**REM: sample */
 .banner {
     background-color: var(--color-background-secondary);
+}
+
+img {
+    background: none;
 }
 
 

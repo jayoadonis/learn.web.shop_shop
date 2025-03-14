@@ -2,4 +2,22 @@
     h1 {
         color: var(--color-text-primary);
     }
+
+}
+
+img {
+    background: none;
+}
+
+#el-home-view 
+#el-id-title-logo {
+    display: flex;
+    width: fit-content;
+    place-items: center;
+}
+
+#el-home-view
+.el-title-logo {
+    width: 5rem;
+    height: auto;
 }

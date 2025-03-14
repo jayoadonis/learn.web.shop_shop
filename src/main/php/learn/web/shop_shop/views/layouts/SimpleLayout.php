@@ -42,6 +42,13 @@ class SimpleLayout extends Layout
         
         $this->cssManager->add("css-toast_i", BaseDir::getResource("/public/resources/css/views/components/toast_i.css"));
         $this->jsManager->add("js-toast_i", BaseDir::getResource("/public/resources/js/views/components/toast_i.js"));
+
+        $this->cssManager->add(
+            "css-simple-layout",
+            BaseDir::getResource("/public/resources/css/views/layouts/simple_layout.css")
+        );
+
+
     }
 
     /**
@@ -88,11 +95,11 @@ class SimpleLayout extends Layout
                 <title><?= $this->title ?></title>
             </head>
 
-            <body id="el-simple-layout">
+            <body id="el-id-body-simple-layout">
                 
                 <?= $headerCtrl ?>
 
-                <section id="el-main">
+                <section id="el-id-main">
                     <?= $outlet ?>
                 </section>
 

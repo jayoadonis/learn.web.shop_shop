@@ -66,7 +66,9 @@ class HomeView extends View {
         ob_start();
         ?>
             <div id="el-home-view" class="<?=$this?>">
-                <h1>HomeView...</h1>
+                <div id="el-id-title-logo">
+                    <span><img class="el-title-logo" src="/public/resources/img/music_app/logo/logo_001_160.png"/></span>HomeView...
+                </div>
                 <!-- <img src="/public/resources/img/bg.jpg"/> -->
                 <?=$heroIComponent?>
                 <h3>PARAM_PATHS: ID: `<?=$paramPathID?>` ~ VERB: `<?=$paramPathVERB?>`</h3>

@@ -7,3 +7,16 @@
         width: fit-content;
     }
 }
+
+#el-id-header-component 
+#el-id-title-logo {
+    display: flex;
+    place-items: center;
+    gap: 1rem;
+}
+
+#el-id-header-component
+.el-title-logo {
+    width: 5rem;
+    height: auto;
+}

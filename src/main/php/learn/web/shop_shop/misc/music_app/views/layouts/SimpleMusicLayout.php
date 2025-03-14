@@ -91,7 +91,7 @@ class SimpleMusicLayout extends Layout
                 <title><?= $this->title ?></title>
             </head>
 
-            <body id="el-simple-layout">
+            <body id="el-id-body-simple-music-layout">
                 
                 <?= $musicHeaderCtrl ?>
 

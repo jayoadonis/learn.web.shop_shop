@@ -48,12 +48,21 @@ class Header extends View {
         ?>
 
         <div id="el-id-header-component" class="<?=$this?>">
-            <a href="/home" id="logo"><h1>Header...123</h1></a>
+            
+            <a href="/home" id="logo">
+                <div id="el-id-title-logo">
+                    <span><img class="el-title-logo" src="/public/resources/img/music_app/logo/logo_001_160.png"/></span>HomeView...
+                </div>
+            </a>
+
             <?= $toggleThemeComponent->render() ?>
+
             <a href="/home/101/demo-button">demo-buton</a>
+
             <?php if( !$isSigningURL && !Session::get(User::class) ): ?>
                 <a href="/signing">Subscribe</a>
             <?php endif; ?>
+
             <a href="/music-app">Music App</a>
         </div>
         <?php
