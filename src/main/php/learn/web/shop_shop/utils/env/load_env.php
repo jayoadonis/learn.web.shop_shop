@@ -5,10 +5,13 @@ namespace learn\web\shop_shop\utils\env;
 
 use \Exception;
 
-function load_env( string $filePath ): void {
+function load_env( string $filePath ): int|false {
 
-    if( !file_exists( $filePath ) )
-        throw new Exception("Environment file not found: {$filePath}");
+    if( !file_exists( $filePath ) ) {
+
+        // throw new Exception("Environment file not found: {$filePath}");
+        return false;
+    }
 
     $lines = \file( $filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
 
@@ -35,5 +38,9 @@ function load_env( string $filePath ): void {
         \putenv("{$key}={$value}");
         $_ENV[$key]     = $value;
         $_SERVER[$key]  = $value;
+
+
     }
+
+    return filesize($filePath);
 }

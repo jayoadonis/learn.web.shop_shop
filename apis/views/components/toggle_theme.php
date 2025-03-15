@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace learn\web\shop_shop\apis\views\components;
+
 require_once(__DIR__ . "/../../../src/main/php/learn/web/shop_shop/prefetch.php");
 
 use learn\web\shop_shop\utils\Session;

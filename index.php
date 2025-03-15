@@ -37,7 +37,9 @@ use learn\web\shop_shop\models\Status;
 
 // Session::clearAll();
 
-$simpleRouter = new SimpleRouter( new SimpleLayout("prototype-i") );
+// echo filter_var( getenv("IS_ACTIVE_LOG"), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null;
+
+$simpleRouter = new SimpleRouter( new SimpleLayout(getenv("APP_NAME")?:"prototype-i") );
 
 
 $simpleRouter->get( "/",                                    [HomeController::class]);

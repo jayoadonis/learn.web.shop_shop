@@ -21,6 +21,8 @@ class SignUpComponent extends View {
      */
     public function init(): void {
 
+        $this->controller->layout->title .= " ~ " . preg_replace("/^(.*)\\\\/", "", $this::class );
+
         $this->controller->layout->cssManager->add(
             "css-sign-up-component", BaseDir::getResource("/public/resources/css/views/components/sign_up_component.css")
         );

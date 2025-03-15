@@ -49,6 +49,7 @@ class HomeView extends View {
         $heroIComponent = (new HeroI($this->controller))->render();
 
 
+
         // $this->controller->fromHomeCtrl();
 
         // $this->controller->addActionListener( $this );

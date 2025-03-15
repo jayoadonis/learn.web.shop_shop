@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace learn\web\shop_shop\views\components;
@@ -14,7 +15,8 @@ use learn\web\shop_shop\utils\Session;
  * 
  * @extends View<HeaderController> [TODO]
  */
-class Header extends View {
+class Header extends View
+{
 
 
     public function __construct(
@@ -26,7 +28,8 @@ class Header extends View {
     /**
      * {@inheritdoc}
      */
-    public function init(): void {
+    public function init(): void
+    {
 
         $this->controller->layout->cssManager->add(
             "css-header-component",
@@ -37,35 +40,39 @@ class Header extends View {
     /**
      * {@inheritdoc}
      */
-    public function render(): View|string|false {
+    public function render(): View|string|false
+    {
 
 
-        $isSigningURL= ( $this->controller->layout->routeData->path === GymStoneURL::SIGNING->getRootPath() );
+        $isSigningURL = ($this->controller->layout->routeData->path === GymStoneURL::SIGNING->getRootPath());
 
         $toggleThemeComponent = new ToggleComponent($this->controller);
 
         ob_start();
-        ?>
+?>
 
-        <div id="el-id-header-component" class="<?=$this?>">
-            
+        <div id="el-id-header-component" class="<?= $this ?>">
+
             <a href="/home" id="logo">
                 <div id="el-id-title-logo">
-                    <span><img class="el-title-logo" src="<?=BaseDir::getResource("/public/resources/img/music_app/logo/logo_001_160.png")?>"/></span>HomeView...
+                    <span><img class="el-title-logo" src="<?= BaseDir::getResource("/public/resources/img/music_app/logo/logo_001_160.png") ?>" /></span>
+                    <span>Header...</span>
                 </div>
             </a>
 
-            <?= $toggleThemeComponent->render() ?>
+            <div id="el-id-nav">
+                <a href="/home/101/demo-button">demo-buton</a>
 
-            <a href="/home/101/demo-button">demo-buton</a>
+                <?php if (!$isSigningURL && !Session::get(User::class)): ?>
+                    <a href="/signing">Subscribe</a>
+                <?php endif; ?>
 
-            <?php if( !$isSigningURL && !Session::get( User::class) ): ?>
-                <a href="/signing">Subscribe</a>
-            <?php endif; ?>
+                <a href="/music-app">Music App</a>
+            </div>
 
-            <a href="/music-app">Music App</a>
+            <span><?= $toggleThemeComponent->render() ?></span>
         </div>
-        <?php
+<?php
 
         return ob_get_clean();
     }
