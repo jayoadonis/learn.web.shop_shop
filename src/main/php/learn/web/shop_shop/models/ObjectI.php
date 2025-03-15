@@ -17,7 +17,8 @@ class ObjectI {
     }
 
     /**
-     * @param null|object|array|int|float $obj
+     * 
+     * @param ObjectI|null|object|array|int|float $obj
      */
     public function equals( mixed $obj ): bool {
 

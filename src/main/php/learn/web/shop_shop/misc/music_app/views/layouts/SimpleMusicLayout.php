@@ -27,6 +27,11 @@ class SimpleMusicLayout extends Layout
      */
     public function init(): void {
 
+        $this->cssManager->add(
+            "css-global",
+            BaseDir::getResource("/public/resources/css/global.css")
+        );
+
         $this->jsManager->add(
             "js-utils-global",
             BaseDir::getResource("/public/resources/js/utils/global.js")
@@ -78,13 +83,9 @@ class SimpleMusicLayout extends Layout
             <html lang="en" 
             data-color-theme="<?=htmlspecialchars(Session::get("theme")??"light", ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8')?>">
 
-            <!-- <html lang="en"> -->
-
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                
-                <link id="css-global" rel="stylesheet" href="/public/resources/css/global.css">
                 
                 <?= $this->cssManager->exhaustIt() ?>
                 

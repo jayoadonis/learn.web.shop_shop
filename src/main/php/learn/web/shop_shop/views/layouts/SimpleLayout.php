@@ -27,6 +27,11 @@ class SimpleLayout extends Layout
      */
     public function init(): void {
 
+        $this->cssManager->add(
+            "css-global",
+            BaseDir::getResource("/public/resources/css/global.css")
+        );
+
         $this->jsManager->add(
             "js-utils-global",
             BaseDir::getResource("/public/resources/js/utils/global.js")
@@ -88,7 +93,6 @@ class SimpleLayout extends Layout
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 
-                <link id="css-global" rel="stylesheet" href="/public/resources/css/global.css">
                 
                 <?= $this->cssManager->exhaustIt() ?>
                 

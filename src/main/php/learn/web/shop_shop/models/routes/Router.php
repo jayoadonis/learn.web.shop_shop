@@ -11,6 +11,7 @@ use learn\web\shop_shop\models\routes\RouteData;
 use learn\web\shop_shop\utils\BaseDir;
 use learn\web\shop_shop\utils\Log;
 use learn\web\shop_shop\utils\LogType;
+use ReflectionNamedType;
 
 abstract class Router extends ObjectI
 {
@@ -105,20 +106,33 @@ abstract class Router extends ObjectI
         //REM: Closure, function, lambda or/and callable that return a string type
         if ( /*is_callable($controller) &&*/($controller instanceof \Closure)) {
 
+            $rFunc = new \ReflectionFunction($controller);
             if (
-                ($returnType = (new \ReflectionFunction($controller))->getReturnType())
+                ($returnType = $rFunc->getReturnType())
                 && $returnType instanceof \ReflectionNamedType
                 && $returnType->getName() === "string"
             ) {
 
-                $this->layout->routeData = $routeData;
-                $this->layout->setOutlet(call_user_func($controller, $this->layout));
+                $params = $rFunc->getParameters();
 
-                echo $this->layout->render();
-                return;
+                if( count($params) === 1 
+                    && ($paramType = $params[0]->getType()) instanceof \ReflectionNamedType
+                    && $paramType->getName() === Layout::class
+                ) {
+
+                    $this->layout->routeData = $routeData;
+                    $this->layout->setOutlet(call_user_func($controller, $this->layout));
+    
+                    echo $this->layout->render();
+                    return;
+                }
             }
 
-            throw new \Exception("Invalid Callable or Closure signature, it should only return a 'string' type.");
+            throw new \Exception(
+                "Invalid Callable or Closure signature, it should only return a 'string' type and a param type of '" 
+                . Layout::class 
+                . "'; RouteData: '" . $routeData->PATH_BLUEPRINT . "'"
+            );
         }
         //REM: (canonnical name) A Subclass of models\Controller.php
         elseif (is_array($controller) && ($arrayControllerCount = count($controller)) > 0) {

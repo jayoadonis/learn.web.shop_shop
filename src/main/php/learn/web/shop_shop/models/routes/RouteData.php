@@ -13,7 +13,7 @@ class RouteData extends ObjectI {
      * @param string $METHOD
      * @param string $PATH
      * @param Param|null $param
-     * @param string[]|callable(Layout):string|\Closure(Layout):string $CONTROLLER
+     * @param array<string>|callable(Layout):string|\Closure(Layout):string $CONTROLLER
      */
     public function __construct(
         public readonly string $METHOD,

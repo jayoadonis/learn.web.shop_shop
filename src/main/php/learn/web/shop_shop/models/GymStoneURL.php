@@ -20,11 +20,11 @@ class GymStoneURLParamVerb extends ObjectI {
 
 enum GymStoneURL : int {
 
-    case HOME = 1;
-    case PRODUCT = 2;
-    case PROFILE = 4;
-    case SIGNING = 8;
-    case MUSIC_APP = 16;
+    case HOME           = 1;
+    case PRODUCT        = 2;
+    case PROFILE        = 4;
+    case SIGNING        = 8;
+    case MUSIC_APP      = 16;
 
     case PAGE_NOT_FOUND = 64;
 
@@ -55,12 +55,12 @@ enum GymStoneURL : int {
     public function getRootPath(): string {
 
         return match( $this ) {
-            self::HOME => "/home",
-            self::PRODUCT => "/product",
-            self::PROFILE => "/profile",
-            self::SIGNING => "/signing",
-            self::MUSIC_APP => "/music-app",
-            default => "/404"
+            self::HOME          => "/home",
+            self::PRODUCT       => "/product",
+            self::PROFILE       => "/profile",
+            self::SIGNING       => "/signing",
+            self::MUSIC_APP     => "/music-app",
+            default             => "/404"
         };
     }
 
@@ -69,9 +69,9 @@ enum GymStoneURL : int {
 
         return match( $this) {
 
-            self::HOME => (object)["demoButton" => "demo-button"],
-            self::PRODUCT => (object)["create" => "create", "edit" => "edit"],
-            self::PROFILE => (object)["edit" => "edit"],
+            self::HOME          => (object)["demoButton" => "demo-button"],
+            self::PRODUCT       => (object)["create" => "create", "edit" => "edit"],
+            self::PROFILE       => (object)["edit" => "edit"],
             
         };
     }
@@ -91,9 +91,9 @@ enum GymStoneURL : int {
 
         return match( $this ) {
 
-            self::HOME => new GymStoneURLParamVerb(demoButton: "demo-button"),
-            self::PRODUCT => new GymStoneURLParamVerb(create:"create", edit:"edit"),
-            self::PROFILE => new GymStoneURLParamVerb(edit:"edit")
+            self::HOME          => new GymStoneURLParamVerb(demoButton: "demo-button"),
+            self::PRODUCT       => new GymStoneURLParamVerb(create:"create", edit:"edit"),
+            self::PROFILE       => new GymStoneURLParamVerb(edit:"edit")
         };
     }
 

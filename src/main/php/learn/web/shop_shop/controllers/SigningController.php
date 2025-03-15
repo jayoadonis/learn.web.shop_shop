@@ -5,7 +5,7 @@ namespace learn\web\shop_shop\controllers;
 
 use learn\web\shop_shop\models\Controller;
 use learn\web\shop_shop\models\Layout;
-use learn\web\shop_shop\models\User;
+use learn\web\shop_shop\models\entities\User;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\Session;
 use learn\web\shop_shop\views\SigningView;

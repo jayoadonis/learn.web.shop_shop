@@ -166,7 +166,7 @@ class BaseDir extends ObjectI
         if (!file_exists($fullPath))
             throw new \RuntimeException("Path does not exists: '{$subPath}'");
 
-        $relativePath = substr($fullPath, strlen($this->rootPath) + 1);
+        $relativePath = DIRECTORY_SEPARATOR . substr($fullPath, strlen($this->rootPath) + 1);
 
         return is_dir($fullPath)
             ? rtrim($relativePath, " \n\r\t\v/\\") . DIRECTORY_SEPARATOR

@@ -15,12 +15,12 @@ $reqData    = file_get_contents("php://input");
 $objData    = json_decode($reqData);
 
 if( json_last_error() !== JSON_ERROR_NONE ) {
-    error_log("Error: JSON decoding; " . json_last_error_msg(), E_ERROR);
+    error_log("Error: Color Theme JSON decoding; " . json_last_error_msg(), E_ERROR);
     responseThemeJson(
         null,
         500,
         false,
-        "Error: JSON decoding; " . json_last_error_msg()
+        "Error: Color Theme JSON decoding; " . json_last_error_msg()
     );
 }
 
@@ -35,7 +35,7 @@ if( !empty( $clientTheme ) && in_array( $clientTheme, COLOR_THEME ) ) {
         $clientTheme,
         200,
         true,
-        "Successfully sessionified..."
+        "Color Theme Successfully sessionified..."
     );
 }
 else {
@@ -45,7 +45,7 @@ else {
         400,
         false,
         strtr(
-            "Invalid client request theme format: {reqData}\nBut the Server color theme contain: {colorTheme}",
+            "Invalid client request color theme format: {reqData}\nBut the Server color theme contain: {colorTheme}",
             [ 
                 "{reqData}"     => $reqData,
                 "{colorTheme}"  => json_encode(COLOR_THEME)

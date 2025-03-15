@@ -5,11 +5,11 @@ namespace learn\web\shop_shop\models;
 
 interface ISessionable {
 
-    /**
-     * [TODO]
-     * @return ObjectI|array<string,mixed>|string|null 
-     */
-    public function getData(): ObjectI|array|string|null;
+    // /**
+    //  * [TODO]
+    //  * @return ObjectI|array<string,mixed>|string|null 
+    //  */
+    // public function getData(): ObjectI|array|string|null;
 
     /**
      * 

@@ -5,7 +5,7 @@ namespace learn\web\shop_shop\views\components;
 
 use learn\web\shop_shop\controllers\HeaderController;
 use learn\web\shop_shop\models\GymStoneURL;
-use learn\web\shop_shop\models\User;
+use learn\web\shop_shop\models\entities\User;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\BaseDir;
 use learn\web\shop_shop\utils\Session;
@@ -51,7 +51,7 @@ class Header extends View {
             
             <a href="/home" id="logo">
                 <div id="el-id-title-logo">
-                    <span><img class="el-title-logo" src="/public/resources/img/music_app/logo/logo_001_160.png"/></span>HomeView...
+                    <span><img class="el-title-logo" src="<?=BaseDir::getResource("/public/resources/img/music_app/logo/logo_001_160.png")?>"/></span>HomeView...
                 </div>
             </a>
 
@@ -59,7 +59,7 @@ class Header extends View {
 
             <a href="/home/101/demo-button">demo-buton</a>
 
-            <?php if( !$isSigningURL && !Session::get(User::class) ): ?>
+            <?php if( !$isSigningURL && !Session::get( User::class) ): ?>
                 <a href="/signing">Subscribe</a>
             <?php endif; ?>
 

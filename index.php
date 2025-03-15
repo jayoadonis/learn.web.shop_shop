@@ -11,16 +11,25 @@ use learn\web\shop_shop\misc\music_app\controllers\MusicController;
 use learn\web\shop_shop\models\GymStoneURL;
 use learn\web\shop_shop\models\Entity;
 use learn\web\shop_shop\models\Layout;
-use learn\web\shop_shop\models\User;
+use learn\web\shop_shop\models\entities\User;
 use learn\web\shop_shop\utils\BaseDir;
 use learn\web\shop_shop\utils\Session;
 use learn\web\shop_shop\utils\SimpleRouter;
 use learn\web\shop_shop\views\layouts\SimpleLayout;
 use learn\web\shop_shop\misc\music_app\views\layouts\SimpleMusicLayout;
+use learn\web\shop_shop\models\Status;
 
-// Session::set( new User( "101", "user_123", "user_123@email.io") );
+// Session::set( new User() );
 
-// print_r( Session::get(User::class)->getEmail() );
+// $x = Session::get(User::class);
+
+// print_r( $x->getEmail() . "<br>");
+// echo( $x->password->value . "<br>");
+// echo "<pre>";
+// var_dump($x);
+// echo "</pre>";
+
+
 
 // Session::setWithExplicitId("user_1", new User( "102", "user_123", "user_122223@email.io"));
 
@@ -57,7 +66,6 @@ $simpleRouter->get("/closure-way", function( Layout $layout ): string {
     </div>
     HTML;
 });
-
 
 $productFC = function(Layout $layout): string {
 
