@@ -19,8 +19,18 @@ interface ISessionable {
 
 
     /**
+     * - Runs before/with `serialize( ... )` function
      * 
-     * @return string[]
+     * @return array<string>
      */
     public function __sleep(): array;
+
+    /**
+     * 
+     * - Run after `\unserialize( ... )` function
+     * - Usually use for re-initialization or/and data integrity check (checksum)....
+     * 
+     * @return void
+     */
+    public function __wakeup(): void;
 }

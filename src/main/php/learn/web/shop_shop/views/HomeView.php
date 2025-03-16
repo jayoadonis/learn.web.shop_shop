@@ -40,6 +40,7 @@ class HomeView extends View {
 
     public function render(): View|string|false {
 
+
         $paramPathID = $this->controller->layout->routeData->param?->paramPath->get("id")??"N/a";
         $paramPathVERB = $this->controller->layout->routeData->param?->paramPath->get("verb")??"N/a";
 

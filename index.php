@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 require_once(__DIR__ . "/src/main/php/learn/web/shop_shop/prefetch.php");
 
-
-
 use learn\web\shop_shop\controllers\HomeController;
 use learn\web\shop_shop\controllers\SigningController;
 use learn\web\shop_shop\misc\music_app\controllers\MusicController;
@@ -17,9 +15,11 @@ use learn\web\shop_shop\utils\Session;
 use learn\web\shop_shop\utils\SimpleRouter;
 use learn\web\shop_shop\views\layouts\SimpleLayout;
 use learn\web\shop_shop\misc\music_app\views\layouts\SimpleMusicLayout;
+use learn\web\shop_shop\models\dbs\DbConfig;
 use learn\web\shop_shop\models\Status;
+use learn\web\shop_shop\utils\Config;
 
-// Session::set( new User() );
+// Session::set( new User( email: "email@io.com") );
 
 // $x = Session::get(User::class);
 
@@ -29,8 +29,6 @@ use learn\web\shop_shop\models\Status;
 // var_dump($x);
 // echo "</pre>";
 
-
-
 // Session::setWithExplicitId("user_1", new User( "102", "user_123", "user_122223@email.io"));
 
 // print_r( Session::get( "user_1" )?->getEmail() );
@@ -39,7 +37,7 @@ use learn\web\shop_shop\models\Status;
 
 // echo filter_var( getenv("IS_ACTIVE_LOG"), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null;
 
-$simpleRouter = new SimpleRouter( new SimpleLayout(getenv("APP_NAME")?:"prototype-i") );
+$simpleRouter = new SimpleRouter( new SimpleLayout( __CONFIGS["general"]["app_name"]?:"prototype-i") );
 
 
 $simpleRouter->get( "/",                                    [HomeController::class]);
@@ -86,9 +84,7 @@ $productFC = function(Layout $layout): string {
         <h3 id="el-lbl-edit">Edit mode</h3>
         <h1>verb: <?=$paramPathVERB?></h1>
         <h1>id: <?=$paramPathID?></h1>
-    <?php
-    else:
-    ?>
+    <?php else:?>
         <h3 id="el-lbl-normal">Normal mode</h3>
         <h1>verb: <?=$paramPathVERB?></h1>
         <h1>id: <?=$paramPathID?></h1>
@@ -153,7 +149,13 @@ if (is_string($queryString)) {
     echo "done...";
 }
 
+// print_r("<pre>");
+// var_dump(__CONFIGS);
+// print_r("</pre>");
 
+echo Config::DATABASE->data()->toHTMLString();
 
+// echo "<pre>";
+// var_dump( $_SERVER );
+// echo "</pre>";
 ?>
-

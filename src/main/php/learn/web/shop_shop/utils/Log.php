@@ -32,7 +32,7 @@ class Log extends ObjectI
 
             //REM: Capture a backtrace for debugging purposes.
             ob_start();
-            debug_print_backtrace();
+            debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 3 /*\max(3, [COMPUTE])*/ );
             $trace = str_replace("\n", "\n\t", ob_get_clean());
 
             //REM: Build the log entry string.

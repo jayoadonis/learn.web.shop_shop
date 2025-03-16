@@ -11,6 +11,7 @@ use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\BaseDir;
 use learn\web\shop_shop\utils\Session;
 
+
 /**
  * 
  * @extends View<HeaderController> [TODO]
@@ -43,6 +44,7 @@ class Header extends View
     public function render(): View|string|false
     {
 
+        $_configs = require  BaseDir::getRootPath() . DIRECTORY_SEPARATOR . "config.php";
 
         $isSigningURL = ($this->controller->layout->routeData->path === GymStoneURL::SIGNING->getRootPath());
 
@@ -56,7 +58,7 @@ class Header extends View
             <a href="/home" id="logo">
                 <div id="el-id-title-logo">
                     <span><img class="el-title-logo" src="<?= BaseDir::getResource("/public/resources/img/music_app/logo/logo_001_160.png") ?>" /></span>
-                    <span>Header...</span>
+                    <span><?=__CONFIGS["general"]["app_name"]?></span>
                 </div>
             </a>
 

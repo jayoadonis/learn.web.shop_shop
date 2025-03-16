@@ -46,10 +46,12 @@ function initEventListenerTheme() {
 
 
 function applyTheme(theme) {
+    
     const elChkBoxToggleTheme = document.getElementById(ID_TOGGLE_THEME);
     const elToggleThemeSlider = document.getElementById(ID_TOGGLE_THEME_SLIDER);
 
     document.documentElement.setAttribute("data-color-theme", theme || Theme.light);
+
     if (elChkBoxToggleTheme) elChkBoxToggleTheme.checked = (theme === Theme.dark);
     if (elToggleThemeSlider) elToggleThemeSlider.textContent = theme.toUpperCase();
 

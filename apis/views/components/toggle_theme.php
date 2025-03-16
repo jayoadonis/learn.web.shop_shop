@@ -7,8 +7,8 @@ require_once(__DIR__ . "/../../../src/main/php/learn/web/shop_shop/prefetch.php"
 
 use learn\web\shop_shop\utils\Session;
 
-if( session_status() === PHP_SESSION_NONE )
-    session_start();
+// if( session_status() === PHP_SESSION_NONE )
+//     session_start();
 
 header("Content-Type: application/json");
 

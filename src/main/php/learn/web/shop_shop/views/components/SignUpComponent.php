@@ -6,6 +6,8 @@ namespace learn\web\shop_shop\views\components;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\models\Controller;
 use learn\web\shop_shop\utils\BaseDir;
+use learn\web\shop_shop\utils\Log;
+use learn\web\shop_shop\utils\LogType;
 
 /**
  * 
@@ -37,6 +39,8 @@ class SignUpComponent extends View {
      * @inheritdoc
      */
     public function render(): View|string|false {
+
+        Log::log(LogType::INFO, "{$this}");
 
         ob_start();
         ?>

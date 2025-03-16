@@ -29,6 +29,7 @@ class User extends Entity {
         $this->email    = $email    ?? Status::UNKNOWN->value;
         $this->userName = $userName ?? Status::UNKNOWN->value;
         $this->password = $password ?? Status::PROTECTED;
+
     }
 
     /**
@@ -61,7 +62,6 @@ class User extends Entity {
 
     /**
      * __sleep() controls which properties are serialized.
-     * In this example, the password is intentionally excluded.
      *
      * @return string[]
      */
@@ -76,6 +76,20 @@ class User extends Entity {
      * @return void
      */
     public function __wakeup(): void {
-        // Reinitialize resources or perform other post-unserialization tasks.
+
+        parent::__wakeup();
+        //REM: Reinitialize resources or perform other post-unserialization tasks.
+    }
+
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    public function hashCode(): int {
+
+        return parent::hashCode() + crc32( 
+            $this->userName .
+            $this->email
+        );
     }
 }

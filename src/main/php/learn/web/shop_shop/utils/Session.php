@@ -86,12 +86,11 @@ class Session extends ObjectI
             session_start();
         }
 
-        //REM: [TODO] If you have specific keys to clear, unset them. Otherwise, clearing the entire session array is sufficient.
-        if (isset(self::$keys) && is_array(self::$keys)) {
-            foreach (self::$keys as $key) {
-                unset($_SESSION[$key]);
-            }
+        //REM: [TODO] .|. Is this really "efficient and sufficient"? 
+        foreach (self::$keys as $key) {
+            unset($_SESSION[$key]);
         }
+        
         //REM: Clear all session variables.
         $_SESSION = [];
 

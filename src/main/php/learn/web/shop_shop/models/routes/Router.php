@@ -121,7 +121,8 @@ abstract class Router extends ObjectI
                 ) {
 
                     $this->layout->routeData = $routeData;
-                    $this->layout->setOutlet(call_user_func($controller, $this->layout));
+                    // $this->layout->setOutlet(call_user_func($controller, $this->layout));
+                    $this->layout->setOutlet( $controller( $this->layout ) );
     
                     echo $this->layout->render();
                     return;

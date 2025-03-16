@@ -35,8 +35,9 @@ class SigningController extends Controller {
 
         if( Session::get(User::class) ) {
 
-            header("Location: /home");
+            header("Location: /home", true, 303);
             // return false;
+            exit();
         }
 
         $signingViewRender = (new SigningView($this));

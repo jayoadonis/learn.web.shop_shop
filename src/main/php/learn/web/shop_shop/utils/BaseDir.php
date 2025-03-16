@@ -74,7 +74,7 @@ class BaseDir extends ObjectI
     public static function getRootPath(): string {
 
         if( BaseDir::$baseDir === null ) 
-            throw new \RuntimeException("Instantiation Exception: " . self::class);
+            throw new \RuntimeException("Instantiation Exception: " . (self::class) );
 
         return BaseDir::$baseDir->rootPath;
     }
@@ -93,11 +93,13 @@ class BaseDir extends ObjectI
 
     private function resolvePath(string $subPath): string
     {
-        if( str_starts_with($subPath, DIRECTORY_SEPARATOR) || preg_match("/^[a-zA-Z0-9 -]+:[\/\\\\]?+/i", $subPath) ) {
+
+        if( /* preg_match("/^[\/\\\\]+/", $subPath) || */ preg_match("/^[a-zA-Z0-9 -]+:[\/\\\\]?+/i", $subPath) ) {
+
             throw new \RuntimeException("Access denied: Absolute path is not allowed '{$subPath}'");
         }
 
-        $charStrip = " \n\r\t\v/\\";
+        $charStrip = " \n\r\t\v/\\\\";
 
         $fullPath = realPath(
             $this->rootPath . DIRECTORY_SEPARATOR
@@ -150,6 +152,10 @@ class BaseDir extends ObjectI
         return implode(DIRECTORY_SEPARATOR, $parts);
     }
 
+    /**
+     * 
+     * Return valid relative file path...
+     */
     public static function getResource(string $subPath): string {
 
         if( BaseDir::$baseDir === null )
