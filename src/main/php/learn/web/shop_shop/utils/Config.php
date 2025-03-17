@@ -8,7 +8,7 @@ use learn\web\shop_shop\models\dbs\DbConfig;
 enum Config  {
 
     case DATABASE;
-    case GENERAL_CONFIG;
+    case GENERAL;
 
     use ConfigTrait;
 

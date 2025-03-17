@@ -6,11 +6,32 @@ namespace learn\web\shop_shop\models;
 class ObjectI {
 
 
+    /** 
+     * 
+     * [TODO] .|. Sanitize properly when echoing/printing __toString(V)String
+     */
     public function __toString(): string {
 
-        return $this::class . "@" . dechex($this->hashCode());
+        return $this->toString();
     }
 
+    /** 
+     * 
+     * [TODO] .|. Sanitize properly when echoing/printing __toString(V)String
+     */
+    public function toString( bool $isSanitize = true ): string {
+
+        $toStr = $this::class . "@" . dechex($this->hashCode());
+
+        return $isSanitize 
+            ? htmlentities( $toStr, ENT_QUOTES|ENT_SUBSTITUTE, "UTF-8" )
+            : $toStr;
+    }
+
+    /** 
+     * 
+     * [TODO] .|. Sanitize properly when echoing/printing __toString(V)String
+     */
     public function toHTMLString(): string {
 
         return htmlentities($this->__toString(), ENT_QUOTES|ENT_SUBSTITUTE, "UTF-8");
@@ -23,7 +44,7 @@ class ObjectI {
 
     /**
      * 
-     * @param ObjectI|null|object|array|int|float $obj
+     * @param ObjectI|object|array|int|float|null $obj
      */
     public function equals( mixed $obj ): bool {
 

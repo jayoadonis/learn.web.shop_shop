@@ -57,4 +57,17 @@ abstract class Layout extends ObjectI implements IRenderer {
 
         return $outlet;
     }
+
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    public function __toString(): string {
+
+        return sprintf(
+            "%s[routeData='%s']",
+            parent::__toString(),
+            $this->routeData->__toString()
+        );
+    }
 }

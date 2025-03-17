@@ -36,7 +36,7 @@ class Log extends ObjectI
             $trace = str_replace("\n", "\n\t", ob_get_clean());
 
             //REM: Build the log entry string.
-            $log_entry = "[{$timestamp}] [{$log_type->code()}:{$log_type->value}] [Requester: {$requester}] '{$msg}'\n\t{$trace}\n";
+            $log_entry = "[{$timestamp}] [{$log_type->code()}:{$log_type->value}] [Requester: {$requester}] {{$msg}}\n\t{$trace}\n";
 
             //REM: Use a default log file name if one isn't provided.
             $log_file_path ??= strtolower($log_type->value) . "-default.log";

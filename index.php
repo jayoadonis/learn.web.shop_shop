@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once(__DIR__ . "/src/main/php/learn/web/shop_shop/prefetch.php");
@@ -16,8 +17,12 @@ use learn\web\shop_shop\utils\SimpleRouter;
 use learn\web\shop_shop\views\layouts\SimpleLayout;
 use learn\web\shop_shop\misc\music_app\views\layouts\SimpleMusicLayout;
 use learn\web\shop_shop\models\dbs\DbConfig;
+use learn\web\shop_shop\models\ProductParamPathVerb;
 use learn\web\shop_shop\models\Status;
 use learn\web\shop_shop\utils\Config;
+use learn\web\shop_shop\utils\Log;
+use learn\web\shop_shop\utils\LogType;
+use learn\web\shop_shop\utils\Option;
 
 // Session::set( new User( email: "email@io.com") );
 
@@ -37,26 +42,27 @@ use learn\web\shop_shop\utils\Config;
 
 // echo filter_var( getenv("IS_ACTIVE_LOG"), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null;
 
-$simpleRouter = new SimpleRouter( new SimpleLayout( __CONFIGS["general"]["app_name"]?:"prototype-i") );
+$simpleRouter = new SimpleRouter(new SimpleLayout(__CONFIGS["general"]["app_name"] ?: "prototype-i"));
 
 
-$simpleRouter->get( "/",                                    [HomeController::class]);
-$simpleRouter->get( GymStoneURL::HOME->get(),               [HomeController::class]);
-$simpleRouter->get( GymStoneURL::HOME->get("{id}"),         [HomeController::class]);
-$simpleRouter->get( GymStoneURL::HOME->get("{id}/{verb}"),  [HomeController::class]);
+$simpleRouter->get("/",                                    [HomeController::class]);
+$simpleRouter->get(GymStoneURL::HOME->get(),               [HomeController::class]);
+$simpleRouter->get(GymStoneURL::HOME->get("{id}/"),        [HomeController::class]);
+$simpleRouter->get(GymStoneURL::HOME->get("{id}/{verb}"),  [HomeController::class]);
 
-$simpleRouter->get("/music-app",                            [MusicController::class, SimpleMusicLayout::class]);
+$simpleRouter->get("/music-app",                           [MusicController::class, [], SimpleMusicLayout::class]);
+$simpleRouter->get("/music-app/{what}",                    [MusicController::class, [], SimpleMusicLayout::class]);
 
 
-$simpleRouter->get("/closure-way", function( Layout $layout ): string {
+$simpleRouter->get("/closure-way", function (Layout $layout): string {
 
     $layout->cssManager->add("css-closure-way-view", BaseDir::getResource("/public/resources/css/views/closure_way_view.css"));
 
-    $paramPathID = ($layout->routeData->param?->paramPath->get("id")??"N/a");
-    $paramPathVERB = ($layout->routeData->param?->paramPath->get("verb")??"N/a") ;
+    $paramPathID = $layout->routeData->param?->paramPath->get("id")->getOrElse("<default>");
+    $paramPathVERB = $layout->routeData->param?->paramPath->get("verb")->getOrElse("<script>alert('oh no')</script>");
 
-    $queryID = ($layout->routeData->param?->query->get("id")??"N/a");
-    $queryCITY = ($layout->routeData->param?->query->get("city")??"N/a") ;
+    $queryID = ($layout->routeData->param?->query->get("id")?? "N/a");
+    $queryCITY = ($layout->routeData->param?->query->get("city")?? "N/a");
 
     return <<<HTML
     <div id="html-closure-way-view">
@@ -67,39 +73,69 @@ $simpleRouter->get("/closure-way", function( Layout $layout ): string {
     HTML;
 });
 
-$productFC = function(Layout $layout): string {
+$productFC = function (Layout $layout): string {
 
     $layout->cssManager->add("css-product-fc", BaseDir::getResource("/public/resources/css/views/product_view.css"));
 
-    $paramPathID = $layout->routeData->param?->paramPath->get("id")??"N/a";
-    $paramPathVERB = $layout->routeData->param?->paramPath->get("verb")??"N/a";
+    $paramPathIdOption      = $layout->routeData->param?->paramPath->get("id");
+    $paramPathVerbOption    = $layout->routeData->param?->paramPath->get("verb");
     
+    $paramPathId            = $paramPathIdOption->getOrElse(Status::UNKNOWN->value);
+    $paramPathVerb          = $paramPathVerbOption->getOrElse(Status::UNKNOWN->value);
 
     ob_start();
-    ?>
-    <h1>Product</h1>
-    <?php
-    if( strtolower($paramPathVERB) === "edit"):
-    ?>
-        <h3 id="el-lbl-edit">Edit mode</h3>
-        <h1>verb: <?=$paramPathVERB?></h1>
-        <h1>id: <?=$paramPathID?></h1>
-    <?php else:?>
-        <h3 id="el-lbl-normal">Normal mode</h3>
-        <h1>verb: <?=$paramPathVERB?></h1>
-        <h1>id: <?=$paramPathID?></h1>
-    <?php
-    endif;
-    ?>
+?>
+    <div id="el-id-product-view">
 
+        <h1>Product</h1>
 
-    <?php
+        <?= $paramPathVerb ?>
+
+        <?php switch ($paramPathVerb) {
+            case 'edit':
+                ob_start();
+        ?>
+                <h3 class="el-lbl-edit">Edit mode</h3>
+                <h1>verb: <?= $paramPathVerb ?></h1>
+                <h1>id: <?= $paramPathId ?></h1>
+            <?php
+                echo ob_get_clean();
+                break;
+
+            case GymStoneURL::PRODUCT->getParamVerb()::CREATE->value:
+                ob_start();
+            ?>
+                <h3 class="el-lbl-normal">Create Mode</h3>
+        <?php
+                echo ob_get_clean();
+                break;
+
+            case Status::UNKNOWN->value:
+                ob_start();
+            ?>
+                <h3 class="el-lbl-normal">Normal Mode</h3>
+                <h1>verb: <?= $paramPathVerb ?></h1>
+                <h1>id: <?= $paramPathId ?></h1>
+        <?php
+                echo ob_get_clean();
+                break;
+
+            default:
+                Log::log(LogType::WARN, "[" . 300 . "] Redirecting '/400', {$layout->__toString()}");
+                header("location: /404");
+                exit();
+        } ?>
+
+    </div>
+<?php
+
+    Log::log(LogType::INFO, $layout->__toString());
     return ob_get_clean();
 };
 
-$simpleRouter->get("/product", $productFC );
-$simpleRouter->get("/product/{id}", $productFC );
-$simpleRouter->get("/product/{id}/{verb}", $productFC );
+$simpleRouter->get("/product", $productFC);
+$simpleRouter->get("/product/{id}", $productFC);
+$simpleRouter->get("/product/{id}/{verb}", $productFC);
 
 $simpleRouter->get("/signing", [SigningController::class]);
 
@@ -112,9 +148,10 @@ $queryString = parse_url($_SERVER["REQUEST_URI"], PHP_URL_QUERY);
 
 //REM: Parse the query string into an associative array
 if (is_string($queryString)) {
+    echo ">>>0 " . $queryString . "<br>";
 
     echo "<pre>";
-    echo ">>>1 " . htmlspecialchars($queryString, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8');
+    echo ">>>1 " . htmlentities($queryString, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     echo "</pre>";
 
     parse_str($queryString, $queryParams);
@@ -125,7 +162,7 @@ if (is_string($queryString)) {
     echo "<pre>";
     //REM: Use htmlspecialchars on each array value to prevent XSS
     foreach ($queryParams as $key => $value) {
-        print ">><> " . $sanitizedAssoc[htmlspecialchars($key, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8')] = htmlspecialchars($value, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8') . "<br>";
+        echo ">><> " . ( $sanitizedAssoc[htmlspecialchars($key, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')] = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ) . "<br>";
     }
     echo "</pre>";
 
@@ -135,12 +172,12 @@ if (is_string($queryString)) {
     $y = json_encode($sanitizedAssoc, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     echo "<><><> " . $y . "</br>";
     echo "</pre>";
-    
+
     echo "<pre>";
     $decodedArray = json_decode($y, true);
     print_r($decodedArray);
     echo "</pre>";
-    
+
     echo "<pre>";
     $decodedArray = json_decode($y);
     print_r($decodedArray);
@@ -158,4 +195,17 @@ echo Config::DATABASE->data()->toHTMLString();
 // echo "<pre>";
 // var_dump( $_SERVER );
 // echo "</pre>";
+
+
+
+// /**
+//  * 
+//  * @var Option<string>
+//  */
+// $option = Option::some("okasdfasd");
+// $option1 = Option::some("okasdfasd");
+
+// echo "<br>value: '" . $option->unwrap() . "'<br>";
+// echo "<br>value: '" . $option1->unwrap() . "'<br>";
+// echo "<br>value: '" . $option->equals($option1) . "'<br>";
 ?>

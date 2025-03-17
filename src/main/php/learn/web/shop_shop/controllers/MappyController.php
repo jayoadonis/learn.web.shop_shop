@@ -24,6 +24,8 @@ class MappyController extends Controller {
      */
     public function render(): View|string|false {
 
+        ob_start();
+
         return ob_get_clean();
     }
 }

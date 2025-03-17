@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace learn\web\shop_shop\models\routes;
 
 use learn\web\shop_shop\models\ObjectI;
+use learn\web\shop_shop\models\Status;
+use learn\web\shop_shop\utils\Option;
 
 //REM: [TODO, PROPER_GENERIC]
 class ParamPath extends ObjectI {
@@ -14,7 +16,7 @@ class ParamPath extends ObjectI {
     private array $datas = [];
 
     /**
-     * @var array<int, string> Valid parameter keys.
+     * @var array<string> Valid parameter keys.
      */
     private array $validParamPathKeys;
 
@@ -22,7 +24,7 @@ class ParamPath extends ObjectI {
      * Constructor.
      *
      * @param array<string,string> $datas Initial data.
-     * @param array<int,string>   $validParamPathKeys  Allowed keys (defaults to ["id", "verb"]).
+     * @param array<string>   $validParamPathKeys  Allowed keys (defaults to ["id", "verb"]).
      */
     public function __construct(
         array $datas,
@@ -35,15 +37,15 @@ class ParamPath extends ObjectI {
     /**
      * Adds one or more valid parameter path keys.
      *
-     * @param string|array<int,string> $paramPathKeys A single key or an array of keys.
+     * @param string|array<string> $paramPathKeys A single key or an array of keys.
      * @return bool True if at least one new key was added; false otherwise.
      */
     public function addValidParamPathKey(string|array $paramPathKeys): bool {
         $added = false;
         if (is_array($paramPathKeys)) {
-            foreach ($paramPathKeys as $path) {
-                if (!in_array($path, $this->validParamPathKeys, true)) {
-                    $this->validParamPathKeys[] = $path;
+            foreach ($paramPathKeys as $pathKey) {
+                if (!in_array($pathKey, $this->validParamPathKeys, true)) {
+                    $this->validParamPathKeys[] = $pathKey;
                     $added = true;
                 }
             }
@@ -77,29 +79,57 @@ class ParamPath extends ObjectI {
      * @param array<string,string> $datas The data to set.
      * @return bool True if the data is valid and set; false otherwise.
      */
+    //REM: [TODO] .|. Is early returning the best way here???
     public function set(array $datas): bool {
-        //REM: Check if at least one key in $datas is allowed.
-        $allowedKeys = array_intersect(array_keys($datas), $this->validParamPathKeys);
-        if (empty($allowedKeys)) {
+
+        /**
+         * 
+         * @var array<string> 
+         */
+        $requestedPathBlueprintKeys = array_keys($datas);
+
+        //REM: filter the user/client requested path blueprint
+        /**
+         * 
+         * @var array<string> 
+         */
+        $computedAllowedPathBlueprintKeys = array_intersect($requestedPathBlueprintKeys, $this->validParamPathKeys);
+
+        //REM: If the requested client param path keys did not stricly had the desirable valid 
+        //REM: param path keys do not add the said client param path keys.
+        if ( count($computedAllowedPathBlueprintKeys) !== count($requestedPathBlueprintKeys)) {
             return false;
         }
+
         $this->datas = $datas;
+
         return true;
     }
 
     /**
      * Retrieves the value for a given key.
-     *
+     * 
      * @param string $key The key whose value to retrieve.
-     * @return string|null Returns the associated value or null if not found.
+     * @return Option<string>
      */
-    public function get(string $key): ?string {
-        return $this->datas[$key] ?? null;
+    public function get(string $key): mixed {
+
+        $value = $this->datas[$key]?? null;
+
+        return $value !== null 
+            ? Option::some( $value ) 
+            : Option::none();
     }
 
     //REM: [TODO] .|. Deep clone it layer or other immutable optimzation...
     public function getData(): array {
 
         return $this->datas;
+    }
+
+    //REM: [TODO] .|. Deep clone later....
+    public function getValidParamPathKeys(): array {
+
+        return $this->validParamPathKeys;
     }
 }

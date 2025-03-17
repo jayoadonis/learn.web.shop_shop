@@ -1,0 +1,22 @@
+
+
+@layer /*css,*/ css__views;
+
+
+/* @import url("../global.css") layer(css); */
+
+
+@layer css__views {
+
+    #el-id-product-view {
+
+        background-color: red;
+    }
+
+    #el-id-product-view
+    .el-lbl-edit {
+
+        color: limegreen;
+    }
+
+}

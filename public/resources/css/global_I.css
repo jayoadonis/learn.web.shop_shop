@@ -1,0 +1,22 @@
+@layer css;
+
+@global {
+
+    @layer base, components, utilities;
+    
+    
+    @layer base {
+    
+    }
+    
+    
+    @layer components {
+    
+    }
+    
+    
+    @layer utilities {
+    
+    }
+
+}

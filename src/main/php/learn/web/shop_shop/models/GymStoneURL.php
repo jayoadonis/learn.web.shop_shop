@@ -5,6 +5,35 @@ namespace learn\web\shop_shop\models;
 
 use learn\web\shop_shop\models\routes\Param;
 use learn\web\shop_shop\models\routes\ParamPath;
+use phpDocumentor\Reflection\Types\Self_;
+
+// /**
+//  * Marker interface for param path verbs.
+//  * 
+//  * @template T of IParamPathVerb
+//  */
+// interface IParamPathVerb {
+//     /**
+//      * Returns the "point" of the verb.
+//      *
+//      * @return T
+//      */
+//     public function point(): mixed;
+
+// }
+
+enum HomeParamPathVerb: string {
+    case EDIT           = "edit";
+    case CREATE         = "create";
+    case DEMO_BUTTON    = "demo-button";
+}
+
+enum ProductParamPathVerb: string {
+    case EDIT   = "edit";
+    case CREATE = "create";
+}
+
+
 
 class GymStoneURLParamVerb extends ObjectI {
 
@@ -87,12 +116,15 @@ enum GymStoneURL : int {
         }
     }
 
-    public function getParamVerb(): GymStoneURLParamVerb {
+    /**
+     * 
+     */
+    public function getParamVerb(): GymStoneURLParamVerb|ProductParamPathVerb|HomeParamPathVerb {
 
         return match( $this ) {
 
-            self::HOME          => new GymStoneURLParamVerb(demoButton: "demo-button"),
-            self::PRODUCT       => new GymStoneURLParamVerb(create:"create", edit:"edit"),
+            self::HOME          => HomeParamPathVerb::EDIT, //REM: [WOW] .|. Cyclical or Chaining??? But still a constant pointer 
+            self::PRODUCT       => ProductParamPathVerb::EDIT, //REM: [WOW] .|. Cyclical or Chaining??? But still a constant pointer 
             self::PROFILE       => new GymStoneURLParamVerb(edit:"edit")
         };
     }

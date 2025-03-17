@@ -40,11 +40,14 @@ abstract class Router extends ObjectI
         );
 
         //REM: [TODO] .|. Only works with class controller...
-        if( is_array( $controller ) ) {
+        if (is_array($controller)) {
 
-            if( is_array( $controller[1]??null ) ) 
-                $param->paramPath->addValidParamPathKey( $controller[1] );
-            
+            if (is_array($controller[1] ?? null) && !empty($controller[1])) {
+
+                $param->paramPath->addValidParamPathKey($controller[1]);
+            }
+
+
             // if( is_array( $controller[2]??null ) ) 
             //     $param->query->addValidQueryKey( $controller[2] );
         }
@@ -76,7 +79,8 @@ abstract class Router extends ObjectI
         //     || !isset(self::$ROUTES[ $_SERVER["REQUEST_METHOD"] ][ $parsedURL = ("/" . trim($parsedURL, "/") ) ] )
         // ) {
 
-        if (!$routeData) {
+        //REM: if null go location: /404
+        if ( !$routeData ) {
 
             try {
                 $this->get("/404", function (Layout $layout): string {
@@ -115,51 +119,62 @@ abstract class Router extends ObjectI
 
                 $params = $rFunc->getParameters();
 
-                if( count($params) === 1 
+                if (
+                    count($params) === 1
                     && ($paramType = $params[0]->getType()) instanceof \ReflectionNamedType
                     && $paramType->getName() === Layout::class
                 ) {
 
                     $this->layout->routeData = $routeData;
                     // $this->layout->setOutlet(call_user_func($controller, $this->layout));
-                    $this->layout->setOutlet( $controller( $this->layout ) );
-    
+                    $this->layout->setOutlet($controller($this->layout));
+
                     echo $this->layout->render();
                     return;
                 }
             }
 
             throw new \Exception(
-                "Invalid Callable or Closure signature, it should only return a 'string' type and a param type of '" 
-                . Layout::class 
-                . "'; RouteData: '" . $routeData->PATH_BLUEPRINT . "'"
+                "Invalid Callable or Closure signature: "
+                    . "function( " . Layout::class . " ): string"
+                    . "; RouteData: '" . $routeData->__toString() . "'"
             );
         }
         //REM: (canonnical name) A Subclass of models\Controller.php
         elseif (is_array($controller) && ($arrayControllerCount = count($controller)) > 0) {
 
-            if ($arrayControllerCount <= 2 ) {
+
+            /**
+             * 
+             * @var class-string<Controller> $class
+             */
+            [$class] = $controller;
+
+            //REM: [TODO] .|. Refactor later...
+            if ($arrayControllerCount >= 2) {
 
                 /**
                  * 
                  * @var class-string<Controller> $class
+                 * @var class-string<Layout> $layoutClass
                  */
-                [$class] = $controller;
+                [$class, $layoutClass] = $controller;
 
-                if( $arrayControllerCount == 2 ) {
-                    /**
-                     * 
-                     * @var class-string<Controller> $class
-                     * @var class-string<Layout> $layoutClass
-                     */
-                    [$class, $layoutClass] = $controller;
+                //REM: [TODO] .|. Refactor later...
+                if( $arrayControllerCount >= 3 ) {
 
-                    if( class_exists($layoutClass) && is_subclass_of($layoutClass, Layout::class) ) {
+                    [$class, $paramPathKeys, $layoutClass] = $controller;
+                }
 
+                //REM: [TODO] .|. Refactor later...
+                if( is_string($layoutClass) ) {
+
+                    if ( class_exists($layoutClass) && is_subclass_of($layoutClass, Layout::class)) {
+    
                         $this->layout = new $layoutClass($this->layout->title);
-
+    
                     } else {
-
+    
                         //REM: i.e. [HomeController::class, "index"]
                         /**
                          * @var class-string<controller> $class
@@ -169,36 +184,36 @@ abstract class Router extends ObjectI
                         //REM: [TODO] .|. Not yet supported...
                         throw new \Exception("Not yet supported 'compound' reflection?");
                     }
+
                 }
+            }
 
+            //REM: [TODO] .|. Refactor later...
+            if (is_string($class) && class_exists($class) && is_subclass_of($class, Controller::class)) {
 
+                // Log::log(
+                //     LogType::INFO, "Router dispatch(V)V "
+                // );
 
-                if (class_exists($class) && is_subclass_of($class, Controller::class)) {
+                //REM: Controller
+                $ctrlObj = new $class($this->layout);
 
-                    // Log::log(
-                    //     LogType::INFO, "Router dispatch(V)V "
-                    // );
+                // $routeData = $this->reloadRouterData(); //REM: [TODO]
 
-                    //REM: Controller
-                    $ctrlObj = new $class($this->layout);
+                // if( $ctrlObj instanceof Controller )
+                $this->layout->setOutlet($ctrlObj);
+                $this->layout->setRouteData($routeData);
 
-                    // $routeData = $this->reloadRouterData(); //REM: [TODO]
+                echo $this->layout->render();
 
-                    // if( $ctrlObj instanceof Controller )
-                    $this->layout->setOutlet($ctrlObj);
-                    $this->layout->setRouteData($routeData);
-
-                    echo $this->layout->render();
-
-                    return;
-                }
+                return;
             }
         }
 
         throw new \Exception("Invalid controller type, cannot dispatch.");
     }
 
-     //REM: [TODO]
+    //REM: [TODO]
     private function reloadRouterData(
         ?string $requestMethod = null,
         ?string $requestURLPath = null
@@ -243,11 +258,18 @@ abstract class Router extends ObjectI
                 $sanitizedRequestParamPaths = [];
 
                 foreach ($paramPaths as $key => $value) {
-                    $sanitizedRequestParamPaths[htmlspecialchars($key, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')]
-                        = htmlspecialchars( $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+                    $sanitizedRequestParamPaths[htmlentities($key, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')]
+                        = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
                 }
 
-                $routeData->param?->paramPath->set($sanitizedRequestParamPaths);
+                if( !$routeData->param?->paramPath->set($sanitizedRequestParamPaths) ) {
+
+                    Log::log( 
+                        LogType::WARN, "Invalid Param Path: [" . implode(", ", array_keys($paramPaths) ) . "]; "
+                        . "strictly must have: " . "[" . implode(", ", $routeData->param?->paramPath->getValidParamPathKeys()) . "]"
+                        . "; RouteData: '" . $routeData . "'"
+                    );
+                }
 
 
                 $strQuery = parse_url($_SERVER["REQUEST_URI"] ?? "?error_code=123", PHP_URL_QUERY);
@@ -286,4 +308,7 @@ abstract class Router extends ObjectI
      * @param callable|array<string> $ctrl
      */
     public abstract function post(string $pathBlueprint, callable|array $ctrl): void;
+
+
+    //REM: [TODO] .|. And other request method...
 }

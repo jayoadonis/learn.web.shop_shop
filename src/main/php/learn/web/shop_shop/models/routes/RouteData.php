@@ -5,6 +5,7 @@ namespace learn\web\shop_shop\models\routes;
 
 use learn\web\shop_shop\models\ObjectI;
 use learn\web\shop_shop\models\Layout;
+use learn\web\shop_shop\models\Status;
 
 class RouteData extends ObjectI {
     
@@ -23,6 +24,20 @@ class RouteData extends ObjectI {
         public readonly mixed $CONTROLLER
     ) {
 
+    }
+
+    /**
+     * 
+     * {@inheritdoc}
+     */
+    public function __toString(): string {
+
+        return sprintf(
+            "%s[PATH_BLUEPRINT='%s', path='%s']",
+            parent::__toString(),
+            $this->PATH_BLUEPRINT,
+            $this->path??Status::UNKNOWN->toString()
+        );
     }
 
 }

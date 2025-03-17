@@ -5,6 +5,7 @@ namespace learn\web\shop_shop\views;
 
 use learn\web\shop_shop\controllers\HomeController;
 use learn\web\shop_shop\models\Controller;
+use learn\web\shop_shop\models\Status;
 use learn\web\shop_shop\models\User;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\BaseDir;
@@ -41,11 +42,11 @@ class HomeView extends View {
     public function render(): View|string|false {
 
 
-        $paramPathID = $this->controller->layout->routeData->param?->paramPath->get("id")??"N/a";
-        $paramPathVERB = $this->controller->layout->routeData->param?->paramPath->get("verb")??"N/a";
+        $paramPathID = $this->controller->layout->routeData?->param?->paramPath->get("id")->getOrElse(Status::UNKNOWN->value);
+        $paramPathVERB = $this->controller->layout->routeData?->param?->paramPath->get("verb")->getOrElse("N/a");
 
-        $queryID = $this->controller->layout->routeData->param?->query->get("id")??"N/a";
-        $queryCIty = $this->controller->layout->routeData->param?->query->get("city")??"N/a";
+        $queryID = $this->controller->layout->routeData?->param?->query->get("id")??"N/a";
+        $queryCIty = $this->controller->layout->routeData?->param?->query->get("city")??"N/a";
 
         $heroIComponent = (new HeroI($this->controller))->render();
 

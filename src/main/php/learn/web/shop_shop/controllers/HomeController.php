@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace learn\web\shop_shop\controllers;
 
 use learn\web\shop_shop\models\Controller;
+use learn\web\shop_shop\models\entities\User;
 use learn\web\shop_shop\models\GymStoneURL;
 use learn\web\shop_shop\models\Layout;
+use learn\web\shop_shop\models\Status;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\LogType;
 use learn\web\shop_shop\views\HomeView;
@@ -43,7 +45,7 @@ class HomeController extends Controller
 
         $paramPathVerb = $this->layout->routeData->param->paramPath->get("verb");
 
-        $isDemoButtonURL = ($paramPathVerb === GymStoneURL::HOME->getParamVerb()->demoButton);
+        $isDemoButtonURL = ($paramPathVerb->getOrElse( Status::UNKNOWN->value ) === GymStoneURL::HOME->getParamVerb()->demoButton);
 
         ob_start();
 ?>

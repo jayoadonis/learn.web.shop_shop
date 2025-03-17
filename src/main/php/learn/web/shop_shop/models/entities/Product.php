@@ -71,7 +71,7 @@ class Product extends Entity {
 
         if( $obj === $this ) return true;
 
-        if( ! ( $obj instanceof Product ) ) return false;
+        if( ! ( $obj instanceof self ) ) return false;
 
         return $obj->name === $this->name && 
             ( abs($obj->price - $this->price) < 0.000001 ); //REM: [TODO] .|. Handle NaN and INFINITY

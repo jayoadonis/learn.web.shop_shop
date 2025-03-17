@@ -1,6 +1,17 @@
-#el-lbl-edit {
+
+#el-id-product-view {
+
+    background: transparent;
+}
+
+#el-id-product-view
+.el-lbl-edit {
+
     color: limegreen;
 }
 
-#el-lbl-normal {
+#el-id-product-view
+.el-lbl-normal {
+
+    color: lightseagreen;
 }
