@@ -45,7 +45,7 @@ class HomeController extends Controller
 
         $paramPathVerb = $this->layout->routeData->param->paramPath->get("verb");
 
-        $isDemoButtonURL = ($paramPathVerb->getOrElse( Status::UNKNOWN->value ) === GymStoneURL::HOME->getParamVerb()->demoButton);
+        $isDemoButtonURL = ($paramPathVerb->getOrElse( Status::UNKNOWN->value ) === GymStoneURL::HOME->getParamVerb()::DEMO_BUTTON->value );
 
         ob_start();
 ?>
