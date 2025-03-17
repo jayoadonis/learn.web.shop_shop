@@ -15,6 +15,8 @@ use learn\web\shop_shop\views\HomeView;
 
 use learn\web\shop_shop\utils\Log;
 use learn\web\shop_shop\views\components\misc\DemoButton;
+use learn\web\shop_shop\utils\Option;
+use learn\web\shop_shop\models\routes\ParamPath;
 
 class HomeController extends Controller
 {
@@ -43,9 +45,28 @@ class HomeController extends Controller
     public function render(): View|String|false
     {
 
-        $paramPathVerb = $this->layout->routeData->param->paramPath->get("verb");
+        /**
+         * 
+         * @var object{*: Option<string>}
+         */
+        $paramPath = $this->layout->routeData->param->paramPath;
 
-        $isDemoButtonURL = ($paramPathVerb->getOrElse( Status::UNKNOWN->value ) === GymStoneURL::HOME->getParamVerb()::DEMO_BUTTON->value );
+        /**
+         * 
+         * @var Option<string>
+         */
+        $paramPathVerbOption = $paramPath->verb;
+
+        /**
+         * 
+         * @var string
+         */
+        $paramPathVerb = $paramPathVerbOption->getOrElse(Status::UNKNOWN->value);
+
+        $paramPathId = $paramPath->id->getOrElse(Status::UNKNOWN->value);
+        $paramPathSurpice = $paramPath->surprise->getOrElse(Status::UNKNOWN->value);
+
+        $isDemoButtonURL = ($paramPathVerb === GymStoneURL::HOME->getParamVerb()::DEMO_BUTTON->value );
 
         ob_start();
 ?>

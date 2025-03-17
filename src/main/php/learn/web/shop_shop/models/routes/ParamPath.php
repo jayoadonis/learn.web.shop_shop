@@ -112,13 +112,59 @@ class ParamPath extends ObjectI {
      * @param string $key The key whose value to retrieve.
      * @return Option<string>
      */
-    public function get(string $key): mixed {
+    public function get(string $key): Option {
 
+        /**
+         * 
+         * @var string|null $value
+         */
         $value = $this->datas[$key]?? null;
 
         return $value !== null 
             ? Option::some( $value ) 
             : Option::none();
+    }
+
+    /**
+     * 
+     * [TODO] .|. No Type-Ahead functionality
+     * 
+     * 
+     * @return Option<string>
+     */
+    public final function __get( string $paramPathKey ): Option {
+
+        return $this->get( $paramPathKey );
+    }
+
+
+    /**
+     * 
+     * [TODO] .|. No Type-Ahead Functionalities and Problem with Unforeseen member properties or/and member functions
+     * 
+     * @return object<string,Option<string>>
+     * 
+     */
+    public function data(): object {
+
+        /**
+         * @var array<string,Option<string>>
+         */
+        $assocArray = [ ];
+
+        foreach( $this->validParamPathKeys as $paramPathKey ) {
+
+            if( $this->datas[$paramPathKey]?? null ) {
+
+                $assocArray[$paramPathKey] = Option::some($this->datas[$paramPathKey]);
+            }
+            else {
+
+                $assocArray[$paramPathKey] = Option::none();
+            }
+        }
+        
+        return (object)$assocArray;
     }
 
     //REM: [TODO] .|. Deep clone it layer or other immutable optimzation...
