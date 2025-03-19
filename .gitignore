@@ -7,7 +7,7 @@
 /output/
 /vendor/
 
-/.misc/
+/**/.misc/
 /logs/
 
 .env.*

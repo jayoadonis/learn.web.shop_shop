@@ -21,13 +21,14 @@ class LandingPage extends View
     ) {
         parent::__construct($musicCtrl);
     }
-    
+
     /**
      * 
      * {@inheritdoc}
      */
-    public function init(): void {
-        
+    public function init(): void
+    {
+
         $this->controller->layout->title .= " ~ MUSIC_APP";
 
         $this->controller->layout->cssManager->add(
@@ -39,7 +40,11 @@ class LandingPage extends View
             "js-music-app-view",
             BaseDir::getResource("/public/resources/js/misc/music_app/views/music_app_view.js")
         );
-        
+
+        $this->controller->layout->cssManager->add(
+            "js-play-list-component",
+            BaseDir::getResource("/public/resources/css/misc/music_app/views/components/play_list_component.css")
+        );
     }
 
     /**
@@ -58,7 +63,7 @@ class LandingPage extends View
             <header class="hero">
                 <div class="hero-content">
                     <h1>Listen to your favorite <span class="highlight">music</span><br>anytime, anywhere</h1>
-                    <button class="cta-button">Start Listening</button>
+                    <button href="#" type="button" class="cta-button">Start Listening</button>
                 </div>
                 <div class="hero-image">
                     <!--REM: https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80 -->
@@ -129,6 +134,21 @@ class LandingPage extends View
                     <span>POP</span>
                     <span>HIP-HOP</span>
                 </div>
+            </section>
+
+            <section id="el-id-play-list-container">
+                <ul class="el-play-list">
+                    <li>
+                        <audio controls preload="auto">
+                            <source type="audio/mpeg" src="/public/resources/audio/.misc/output.mp3">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </li>
+                    <li>
+                        <audio controls preload="auto">
+                        </audio>
+                    </li>
+                </ul>
             </section>
 
             <section class="download">

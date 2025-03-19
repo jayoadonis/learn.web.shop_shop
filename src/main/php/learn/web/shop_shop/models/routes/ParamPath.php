@@ -5,6 +5,8 @@ namespace learn\web\shop_shop\models\routes;
 
 use learn\web\shop_shop\models\ObjectI;
 use learn\web\shop_shop\models\Status;
+use learn\web\shop_shop\utils\Log;
+use learn\web\shop_shop\utils\LogType;
 use learn\web\shop_shop\utils\Option;
 
 //REM: [TODO, PROPER_GENERIC]
@@ -120,6 +122,8 @@ class ParamPath extends ObjectI {
          */
         $value = $this->datas[$key]?? null;
 
+        Log::log( ($value? LogType::INFO : LogType::WARN), "{$this}; '{$key}' : '{$value}', validParamPathKeys[ " . implode(", ", $this->validParamPathKeys ) . " ]");
+
         return $value !== null 
             ? Option::some( $value ) 
             : Option::none();
@@ -127,7 +131,7 @@ class ParamPath extends ObjectI {
 
     /**
      * 
-     * [TODO] .|. No Type-Ahead functionality
+     * [TODO] .|. No Type-Ahead functionality, but can be fix with static analysis (PHPDoc)
      * 
      * 
      * @return Option<string>
@@ -140,7 +144,7 @@ class ParamPath extends ObjectI {
 
     /**
      * 
-     * [TODO] .|. No Type-Ahead Functionalities and Problem with Unforeseen member properties or/and member functions
+     * [TODO] .|. No Type-Ahead Functionalities (but can be fix with static analysis (PHPDoc)) and there is still a Problem with Unforeseen member properties or/and member functions
      * 
      * @return object<string,Option<string>>
      * 

@@ -17,7 +17,16 @@ abstract class Router extends ObjectI
 {
 
     /**
+     * 
+     * ### A collection of registered routes grouped by HTTP request method.
+     * - Outer array key *`string,`* HTTP request method; e.q. **GET**, **POST**, **PUT**, **DELETE** and etc
+     * - Inner array key *`string,`* blueprint path; e.q. **\/home**, **\/product\/{id}** and etc
+     * - Inner array value *`RouteData`*, the associated route basic meta-data
+     * 
      * @var array<string,array<string,RouteData>> $ROUTES
+     * 
+     * @see learn\web\shop_shop\models\routes\RouteData
+     * 
      */
     protected static array $ROUTES;
 
@@ -69,6 +78,13 @@ abstract class Router extends ObjectI
 
     public function dispatch(): void
     {
+
+        
+        //REM: [TODO] .|. Early return upong requesting POST, DELETE
+        if( $_SERVER["REQUEST_METHOD"] === "POST" ) {
+            header("Location: " . $_SERVER["REQUEST_URI"]);
+            exit();
+        }
 
         $routeData = $this->reloadRouterData();  //REM: [TODO]
 
@@ -271,8 +287,7 @@ abstract class Router extends ObjectI
                     );
                 }
 
-
-                $strQuery = parse_url($_SERVER["REQUEST_URI"] ?? "?error_code=123", PHP_URL_QUERY);
+                $strQuery = parse_url(($_SERVER["REQUEST_URI"] ?? "?error_code=123"), PHP_URL_QUERY);
 
                 if (is_string($strQuery)) {
 

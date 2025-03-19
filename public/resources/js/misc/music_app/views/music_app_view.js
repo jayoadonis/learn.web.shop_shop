@@ -16,7 +16,7 @@ window.addEventListener('scroll', () => {
     } else {
         navbar.style.background = 'rgba(10, 10, 30, 0.8)';
     }
-});
+}, {passive:true});
 
 // Animate elements on scroll
 const observerOptions = {
@@ -54,9 +54,9 @@ document.querySelectorAll('.artist-card').forEach(card => {
         const rotateY = (xPercent - 0.5) * 20;
         
         card.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-    });
+    }, {passive:true});
     
     card.addEventListener('mouseleave', () => {
         card.style.transform = 'none';
-    });
+    }, {passive:true});
 });

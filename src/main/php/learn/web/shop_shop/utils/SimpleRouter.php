@@ -13,7 +13,7 @@ class SimpleRouter extends Router {
     public function get(string $pathBlueprint, callable|array $ctrl ): void {
 
         if( !$this->add("GET", $pathBlueprint, $ctrl) )
-            throw new \Exception("Cannot Be added 'path' = '{$pathBlueprint}' as GET.");
+            throw new \Exception("Cannot Be added 'path' = '{$pathBlueprint}' as GET. It already exist.");
     }
  
     /**
@@ -22,6 +22,6 @@ class SimpleRouter extends Router {
     public function post(string $pathBlueprint, callable|array $ctrl ): void {
 
         if( !$this->add("POST", $pathBlueprint, $ctrl) )
-            throw new \Exception("Cannot Be added 'path' = '{$pathBlueprint}' as POST.");
+            throw new \Exception("Cannot Be added 'path' = '{$pathBlueprint}' as POST. It already exist.");
     }
 }

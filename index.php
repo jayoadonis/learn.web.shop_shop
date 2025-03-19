@@ -53,13 +53,14 @@ $simpleRouter->get(GymStoneURL::HOME->get("{id}/{verb}"),  [HomeController::clas
 $simpleRouter->get("/music-app",                           [MusicController::class, [], SimpleMusicLayout::class]);
 $simpleRouter->get("/music-app/{what}",                    [MusicController::class, [], SimpleMusicLayout::class]);
 
+// $simpleRouter->post("/signing/{verb}", [SigningAPIController::class]);
 
 $simpleRouter->get("/closure-way", function (Layout $layout): string {
 
     $layout->cssManager->add("css-closure-way-view", BaseDir::getResource("/public/resources/css/views/closure_way_view.css"));
 
-    $paramPathID = $layout->routeData->param?->paramPath->get("id")->getOrElse("<default>");
-    $paramPathVERB = $layout->routeData->param?->paramPath->get("verb")->getOrElse("<script>alert('oh no')</script>");
+    $paramPathID = $layout->routeData->param?->paramPath->id->getOrElse("<default>");
+    $paramPathVERB = $layout->routeData->param?->paramPath->verb->getOrElse("<script>alert('oh no')</script>");
 
     $queryID = ($layout->routeData->param?->query->get("id")?? "N/a");
     $queryCITY = ($layout->routeData->param?->query->get("city")?? "N/a");
@@ -77,8 +78,8 @@ $productFC = function (Layout $layout): string {
 
     $layout->cssManager->add("css-product-fc", BaseDir::getResource("/public/resources/css/views/product_view.css"));
 
-    $paramPathIdOption      = $layout->routeData->param?->paramPath->get("id");
-    $paramPathVerbOption    = $layout->routeData->param?->paramPath->get("verb");
+    $paramPathIdOption      = $layout->routeData->param?->paramPath->id;
+    $paramPathVerbOption    = $layout->routeData->param?->paramPath->verbz;
     
     $paramPathId            = $paramPathIdOption->getOrElse(Status::UNKNOWN->value);
     $paramPathVerb          = $paramPathVerbOption->getOrElse(Status::UNKNOWN->value);

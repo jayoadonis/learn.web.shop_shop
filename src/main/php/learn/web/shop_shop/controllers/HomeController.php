@@ -47,7 +47,7 @@ class HomeController extends Controller
 
         /**
          * 
-         * @var object{*: Option<string>}
+         * @var object{id:Option<string>,verb:Option<string>}
          */
         $paramPath = $this->layout->routeData->param->paramPath;
 
