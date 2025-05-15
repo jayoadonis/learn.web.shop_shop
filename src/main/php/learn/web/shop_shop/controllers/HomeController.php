@@ -64,10 +64,11 @@ class HomeController extends Controller
         $paramPathVerb = $paramPathVerbOption->getOrElse(Status::UNKNOWN->value);
 
         $paramPathId = $paramPath->id->getOrElse(Status::UNKNOWN->value);
-        $paramPathSurpice = $paramPath->surprise->getOrElse(Status::UNKNOWN->value);
+        $paramPathSurpise = $paramPath->surprise->getOrElse(Status::UNKNOWN->value);
 
         $isDemoButtonURL = ($paramPathVerb === GymStoneURL::HOME->getParamVerb()::DEMO_BUTTON->value );
 
+        
         ob_start();
 ?>
 
@@ -77,6 +78,7 @@ class HomeController extends Controller
             <?php else: ?>
                 <?= (new DemoButton($this))->render() ?>
             <?php endif; ?>
+            <?= $paramPathSurpise ?>
         </div>
 <?php
         return ob_get_clean();

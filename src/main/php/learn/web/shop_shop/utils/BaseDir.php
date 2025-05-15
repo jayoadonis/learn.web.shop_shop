@@ -41,8 +41,10 @@ class BaseDir extends ObjectI
 
         $realRootPath = realpath($rootPath);
 
-        if ($realRootPath === false || !is_dir($realRootPath))
+        if ($realRootPath === false || !is_dir($realRootPath)) {
+
             throw new \RuntimeException("Invalid Base Directory.");
+        }
             
         $charStrip = " \n\r\t\v/\\";
 
@@ -87,7 +89,7 @@ class BaseDir extends ObjectI
 
         if (BaseDir::$baseDir === null)
             BaseDir::$baseDir = new BaseDir($rootPath, $blackListedFilePaths ?? [], $whiteListedFilePaths ?? []);
-
+        
         return BaseDir::$baseDir;
     }
 

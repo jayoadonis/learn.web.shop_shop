@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once(__DIR__ . "/src/main/php/learn/web/shop_shop/prefetch.php");
 
 use learn\web\shop_shop\controllers\HomeController;
+use learn\web\shop_shop\controllers\ProductController;
 use learn\web\shop_shop\controllers\SigningController;
 use learn\web\shop_shop\misc\music_app\controllers\MusicController;
 use learn\web\shop_shop\models\GymStoneURL;
@@ -19,6 +20,7 @@ use learn\web\shop_shop\misc\music_app\views\layouts\SimpleMusicLayout;
 use learn\web\shop_shop\models\dbs\DbConfig;
 use learn\web\shop_shop\models\ProductParamPathVerb;
 use learn\web\shop_shop\models\Status;
+use learn\web\shop_shop\utils\BaseDirI;
 use learn\web\shop_shop\utils\Config;
 use learn\web\shop_shop\utils\Log;
 use learn\web\shop_shop\utils\LogType;
@@ -50,8 +52,9 @@ $simpleRouter->get(GymStoneURL::HOME->get(),               [HomeController::clas
 $simpleRouter->get(GymStoneURL::HOME->get("{id}/"),        [HomeController::class]);
 $simpleRouter->get(GymStoneURL::HOME->get("{id}/{verb}"),  [HomeController::class]);
 
+$simpleRouter->get("/productz",                            [ProductController::class]);
 $simpleRouter->get("/music-app",                           [MusicController::class, [], SimpleMusicLayout::class]);
-$simpleRouter->get("/music-app/{what}",                    [MusicController::class, [], SimpleMusicLayout::class]);
+$simpleRouter->get("/music-app/{what}",                    [MusicController::class, ["what"], SimpleMusicLayout::class]);
 
 // $simpleRouter->post("/signing/{verb}", [SigningAPIController::class]);
 
@@ -79,7 +82,7 @@ $productFC = function (Layout $layout): string {
     $layout->cssManager->add("css-product-fc", BaseDir::getResource("/public/resources/css/views/product_view.css"));
 
     $paramPathIdOption      = $layout->routeData->param?->paramPath->id;
-    $paramPathVerbOption    = $layout->routeData->param?->paramPath->verbz;
+    $paramPathVerbOption    = $layout->routeData->param?->paramPath->verb;
     
     $paramPathId            = $paramPathIdOption->getOrElse(Status::UNKNOWN->value);
     $paramPathVerb          = $paramPathVerbOption->getOrElse(Status::UNKNOWN->value);
@@ -93,7 +96,7 @@ $productFC = function (Layout $layout): string {
         <?= $paramPathVerb ?>
 
         <?php switch ($paramPathVerb) {
-            case 'edit':
+            case GymStoneURL::PRODUCT->getParamVerb()::EDIT->value:
                 ob_start();
         ?>
                 <h3 class="el-lbl-edit">Edit mode</h3>
@@ -107,6 +110,8 @@ $productFC = function (Layout $layout): string {
                 ob_start();
             ?>
                 <h3 class="el-lbl-normal">Create Mode</h3>
+                <h1>verb: <?=$paramPathVerb?></h1>
+                <h1>id: <?=$paramPathId?></h1>
         <?php
                 echo ob_get_clean();
                 break;
@@ -209,4 +214,32 @@ echo Config::DATABASE->data()->toHTMLString();
 // echo "<br>value: '" . $option->unwrap() . "'<br>";
 // echo "<br>value: '" . $option1->unwrap() . "'<br>";
 // echo "<br>value: '" . $option->equals($option1) . "'<br>";
+
+
+echo "<br> config.php, log_types: '" . implode(", ", __CONFIGS["general"]["show_log_types"]) . "'";
+echo "<br> Log obj, log_types: '" . implode(", ", Log::$showLogTypes) . "'";
+
+
+
+// $x = 4;
+// $y = 3;
+// $z = 1;
+// $z .= $z . ($x + $y);
+
+
+// echo "<br>>>> " . $z . "<br>";
+
+
+
+// BaseDirI::init(__DIR__);
+// BaseDirI::init(__DIR__);
+// BaseDirI::setWhitelist(["src/main"]);
+// BaseDirI::setBlacklist(["src"]);
+
+// echo "<br>===<br>";
+// echo BaseDirI::getRootDir() . "<br>";
+// // echo "w: " . implode(", ", BaseDirI::$whitelist) . "<br>";
+// // echo "b: " . implode(", ", BaseDirI::$blacklist) . "<br>";
+// // echo BaseDirI::resolve("/src") . "<br>";
+// echo BaseDirI::resolve("/src/main") . "<br>";
 ?>

@@ -5,6 +5,10 @@ namespace learn\web\shop_shop\models;
 
 class ObjectI {
 
+    public function __construct()
+    {
+        
+    }
 
     /** 
      * 

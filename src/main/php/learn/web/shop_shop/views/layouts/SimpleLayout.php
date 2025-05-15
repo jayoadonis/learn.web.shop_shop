@@ -83,7 +83,7 @@ class SimpleLayout extends Layout
         $outlet = ($this->outlet instanceof IRenderer) ? $this->outlet->render() : $this->outlet;
 
         ob_start();
-        ?>
+?>
             <!DOCTYPE html>
 
             <html lang="en" 
@@ -92,10 +92,9 @@ class SimpleLayout extends Layout
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                
-                
+
                 <?= $this->cssManager->exhaustIt() ?>
-                
+
                 <title><?= $this->title ?></title>
             </head>
 
@@ -111,12 +110,12 @@ class SimpleLayout extends Layout
                     <h1>Footer...</h1>
                 </footer>
 
-                <?= $this->jsManager->exhaustIt() ?>
+                <?=$this->jsManager->exhaustIt()?>
             </body>
 
             </html>
 
-        <?php
+<?php
 
         return ob_get_clean();
     }

@@ -56,14 +56,27 @@ function load_env( string $filePath, ?string $prefixKey = null ): int|false {
             // $value = preg_replace("/^[\"']|[\"']$/", '', $value);
 
             $value = \substr($value, 1, -1);
-
-            if( empty( \trim($value) ) ) continue;
         }
+
+
+        if( (\strlen($value) > 1) 
+            && ( $value[0] === '[' && \substr($value, -1) === ']') 
+        ) {
+
+            $value = \substr($value, 1, -1);
+
+            $values = \explode(",", $value);
+
+            $value = \serialize($values);
+        }
+
+        if( empty( \trim($value) ) ) continue;
+
+        // echo $key . ": " . $value . "<br>";
 
         \putenv("{$key}={$value}");
         $_ENV[$key]     = $value;
         $_SERVER[$key]  = $value;
-
 
     }
 

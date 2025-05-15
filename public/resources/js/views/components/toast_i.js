@@ -70,6 +70,9 @@ async function showToastI(
         toastContainer.id = containerKey;
         toastContainer.className = `${elContainerId} ${position}`;
         document.body.appendChild(toastContainer);
+        // toastContainer.addEventListener("click", function(){
+        //     clearInterval( containerToastITimeoutId );
+        // });
     }
 
     //REM: Create toast element

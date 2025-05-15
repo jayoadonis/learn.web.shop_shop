@@ -6,6 +6,8 @@ namespace learn\web\shop_shop\misc\music_app\views;
 
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\misc\music_app\controllers\MusicController;
+use learn\web\shop_shop\misc\music_app\views\components\PlaylistComponent;
+use learn\web\shop_shop\models\Status;
 use learn\web\shop_shop\utils\BaseDir;
 
 /**
@@ -15,11 +17,15 @@ use learn\web\shop_shop\utils\BaseDir;
 class LandingPage extends View
 {
 
+    private readonly PlaylistComponent $playlist;
+
 
     public function __construct(
         MusicController $musicCtrl
     ) {
         parent::__construct($musicCtrl);
+        
+        $this->playlist = new PlaylistComponent($this->controller);
     }
 
     /**
@@ -41,10 +47,6 @@ class LandingPage extends View
             BaseDir::getResource("/public/resources/js/misc/music_app/views/music_app_view.js")
         );
 
-        $this->controller->layout->cssManager->add(
-            "js-play-list-component",
-            BaseDir::getResource("/public/resources/css/misc/music_app/views/components/play_list_component.css")
-        );
     }
 
     /**
@@ -54,6 +56,9 @@ class LandingPage extends View
     public function render(): View|string|false
     {
 
+        $paramPathVerb = $this->controller->layout->routeData->param->paramPath->what->getOrElse(Status::UNKNOWN->value);
+
+
         ob_start();
 
 ?>
@@ -62,7 +67,7 @@ class LandingPage extends View
 
             <header class="hero">
                 <div class="hero-content">
-                    <h1>Listen to your favorite <span class="highlight">music</span><br>anytime, anywhere</h1>
+                    <h1>Listen to your favorite <span>'<?=$paramPathVerb?>'</span> <span class="highlight">music</span><br>anytime, anywhere</h1>
                     <button href="#" type="button" class="cta-button">Start Listening</button>
                 </div>
                 <div class="hero-image">
@@ -136,20 +141,7 @@ class LandingPage extends View
                 </div>
             </section>
 
-            <section id="el-id-play-list-container">
-                <ul class="el-play-list">
-                    <li>
-                        <audio controls preload="auto">
-                            <source type="audio/mpeg" src="/public/resources/audio/.misc/output.mp3">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </li>
-                    <li>
-                        <audio controls preload="auto">
-                        </audio>
-                    </li>
-                </ul>
-            </section>
+            <?= $this->playlist->render() ?>
 
             <section class="download">
                 <div class="download-content">

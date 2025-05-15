@@ -25,7 +25,9 @@ final class Option extends ObjectI {
      */
     private $value;
 
-
+    /**
+     * @var self<null> $none 
+     */
     private static ?self $none = null;
 
     /**

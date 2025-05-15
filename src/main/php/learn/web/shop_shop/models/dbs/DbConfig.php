@@ -67,6 +67,7 @@ final class DbConfig extends ObjectI implements ISessionable {
         return $this::class;
     }
 
+    //REM: [SERIALIZATION] serialized() and deserialized()
     public function __sleep(): array {
 
         return ["provider", "host", "port", "dbName"];

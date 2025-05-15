@@ -6,6 +6,7 @@ namespace learn\web\shop_shop\misc\music_app\views\components;
 
 use learn\web\shop_shop\models\Component;
 use learn\web\shop_shop\models\Controller;
+use learn\web\shop_shop\models\Status;
 use learn\web\shop_shop\models\View;
 use learn\web\shop_shop\utils\BaseDir;
 use learn\web\shop_shop\views\components\ToggleComponent;
@@ -41,6 +42,8 @@ class MusicHeaderComponent extends Component
         
         $toggleThemeComponent = new ToggleComponent($this->controller);
 
+        $paramPathVerb = $this->controller->layout->routeData->param->paramPath->verb->getOrElse(Status::UNKNOWN->value);
+
         ob_start();
 ?>
         <nav class="navbar">
@@ -51,7 +54,7 @@ class MusicHeaderComponent extends Component
             </div>
             <div class="nav-links">
                 <a href="#" class="active">Home</a>
-                <a href="#">Music</a>
+                <a href="#el-id-playlist-container" class="quadrat">Music</a>
                 <a href="#">Events</a>
                 <a href="#">Artists</a>
                 <a href="#">Contact</a>

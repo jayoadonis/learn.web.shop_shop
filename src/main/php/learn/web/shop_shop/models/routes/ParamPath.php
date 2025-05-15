@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace learn\web\shop_shop\models\routes;
@@ -10,7 +11,8 @@ use learn\web\shop_shop\utils\LogType;
 use learn\web\shop_shop\utils\Option;
 
 //REM: [TODO, PROPER_GENERIC]
-class ParamPath extends ObjectI {
+class ParamPath extends ObjectI
+{
 
     /**
      * @var array<string,string> Data items where keys and values are strings.
@@ -31,7 +33,7 @@ class ParamPath extends ObjectI {
     public function __construct(
         array $datas,
         array $validParamPathKeys = ["id", "verb"]
-    ) { 
+    ) {
         $this->validParamPathKeys = $validParamPathKeys;
         $this->set($datas);
     }
@@ -42,7 +44,8 @@ class ParamPath extends ObjectI {
      * @param string|array<string> $paramPathKeys A single key or an array of keys.
      * @return bool True if at least one new key was added; false otherwise.
      */
-    public function addValidParamPathKey(string|array $paramPathKeys): bool {
+    public function addValidParamPathKey(string|array $paramPathKeys): bool
+    {
         $added = false;
         if (is_array($paramPathKeys)) {
             foreach ($paramPathKeys as $pathKey) {
@@ -67,7 +70,8 @@ class ParamPath extends ObjectI {
      * @param string $value The value associated with the key.
      * @return string|null Returns the key if insertion is successful, null otherwise.
      */
-    public function insert(string $key, string $value): ?string {
+    public function insert(string $key, string $value): ?string
+    {
         if (in_array($key, $this->validParamPathKeys, true)) {
             $this->datas[$key] = $value;
             return $key;
@@ -82,7 +86,8 @@ class ParamPath extends ObjectI {
      * @return bool True if the data is valid and set; false otherwise.
      */
     //REM: [TODO] .|. Is early returning the best way here???
-    public function set(array $datas): bool {
+    public function set(array $datas): bool
+    {
 
         /**
          * 
@@ -99,7 +104,7 @@ class ParamPath extends ObjectI {
 
         //REM: If the requested client param path keys did not stricly had the desirable valid 
         //REM: param path keys do not add the said client param path keys.
-        if ( count($computedAllowedPathBlueprintKeys) !== count($requestedPathBlueprintKeys)) {
+        if (count($computedAllowedPathBlueprintKeys) !== count($requestedPathBlueprintKeys)) {
             return false;
         }
 
@@ -114,18 +119,31 @@ class ParamPath extends ObjectI {
      * @param string $key The key whose value to retrieve.
      * @return Option<string>
      */
-    public function get(string $key): Option {
+    public function get(string $key): Option
+    {
 
         /**
          * 
          * @var string|null $value
          */
-        $value = $this->datas[$key]?? null;
+        $value = $this->datas[$key] ?? null;
 
-        Log::log( ($value? LogType::INFO : LogType::WARN), "{$this}; '{$key}' : '{$value}', validParamPathKeys[ " . implode(", ", $this->validParamPathKeys ) . " ]");
 
-        return $value !== null 
-            ? Option::some( $value ) 
+        Log::log(
+            ($value ? LogType::INFO : LogType::WARN),
+            //REM: make it closure/lambda so that we can do lazy impl.
+            strtr(
+                "{cN}; {desc}. Requested URL: '{url}'",
+                [
+                    "{cN}" => $this,
+                    "{desc}" => ($value) ? "paramPath data: [ {$key} => {$value} ]" : "Undefined paramPathKey '{$key}'",
+                    "{url}" => $_SERVER["REQUEST_URI"] ?? "undefined"
+                ]
+            )
+        );
+
+        return $value !== null
+            ? Option::some($value)
             : Option::none();
     }
 
@@ -136,9 +154,10 @@ class ParamPath extends ObjectI {
      * 
      * @return Option<string>
      */
-    public final function __get( string $paramPathKey ): Option {
+    public final function __get(string $paramPathKey): Option
+    {
 
-        return $this->get( $paramPathKey );
+        return $this->get($paramPathKey);
     }
 
 
@@ -149,36 +168,38 @@ class ParamPath extends ObjectI {
      * @return object<string,Option<string>>
      * 
      */
-    public function data(): object {
+    public function data(): object
+    {
 
         /**
          * @var array<string,Option<string>>
          */
-        $assocArray = [ ];
+        $assocArray = [];
 
-        foreach( $this->validParamPathKeys as $paramPathKey ) {
+        foreach ($this->validParamPathKeys as $paramPathKey) {
 
-            if( $this->datas[$paramPathKey]?? null ) {
+            if ($this->datas[$paramPathKey] ?? null) {
 
                 $assocArray[$paramPathKey] = Option::some($this->datas[$paramPathKey]);
-            }
-            else {
+            } else {
 
                 $assocArray[$paramPathKey] = Option::none();
             }
         }
-        
+
         return (object)$assocArray;
     }
 
     //REM: [TODO] .|. Deep clone it layer or other immutable optimzation...
-    public function getData(): array {
+    public function getData(): array
+    {
 
         return $this->datas;
     }
 
     //REM: [TODO] .|. Deep clone later....
-    public function getValidParamPathKeys(): array {
+    public function getValidParamPathKeys(): array
+    {
 
         return $this->validParamPathKeys;
     }

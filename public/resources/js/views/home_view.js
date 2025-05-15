@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnTest1 = document.getElementById("btn-test-1");
     const btnTest2 = document.getElementById("btn-test-2");
 
-    if (!btnTest1 || !btnTest2) {
+    const btnCenterNotif = document.querySelector(".center-notif[data-btn]");
+
+    if (!btnTest1 || !btnTest2 || !btnCenterNotif) {
         console.error("Error: Required element not found.");
         return;
     }
@@ -28,6 +30,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }, {
         passive: true
     });
+
+    btnCenterNotif.addEventListener("click", ()=>{
+        showToastI(
+            "Center Notif...",
+            ToastType.INFO,
+            ToastPosition.CENTER,
+            ToastDuration.LONG,
+        );
+    });
+    
 });
 
 //REM: Global variable to store the timeout ID

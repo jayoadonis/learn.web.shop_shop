@@ -19,9 +19,9 @@ window.addEventListener("pageshow", () => {
 
     const currentTheme = localStorage.getItem(KEY_LOCAL_STORAGE_THEME) || Theme.light;
 
-    // applyTheme(currentTheme);
+    applyTheme(currentTheme);
 
-    pilotColorTheme(currentTheme);
+    // pilotColorTheme(currentTheme);
 }, { passive: true });
 
 
@@ -39,17 +39,18 @@ const ATTR_DATA_COLOR_THEME         = "data-color-theme";
 
 function initEventListenerTheme() {
 
-    console.log(ID_TOGGLE_THEME, "initEventListenerTheme")
+    console.log(ID_TOGGLE_THEME, "initEventListenerTheme");
 
     const elToggleThemeContainer = document.getElementById(ID_TOGGLE_THEME_CONTAINER);
 
     if (!elToggleThemeContainer) {
+        
         console.error(`Missing element: ${ID_TOGGLE_THEME_CONTAINER}`);
         return;
     }
 
-    // const currentTheme = localStorage.getItem(KEY_LOCAL_STORAGE_THEME) || Theme.light;
-    // pilotColorTheme(currentTheme);
+    const currentTheme = localStorage.getItem(KEY_LOCAL_STORAGE_THEME) || Theme.light;
+    pilotColorTheme(currentTheme);
      
     elToggleThemeContainer.addEventListener("click", function (event) {
 

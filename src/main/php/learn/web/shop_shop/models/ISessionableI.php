@@ -8,7 +8,7 @@ interface ISessionableI extends ISerializable {
 
     /**
      * 
-     * @return class-string<ISessionable>
+     * @return class-string<ISessionableI>
      */
     public function getType(): mixed;
 }

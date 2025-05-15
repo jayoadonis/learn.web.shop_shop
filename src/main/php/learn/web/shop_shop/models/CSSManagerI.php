@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace learn\web\shop_shop\models;
 
+use function learn\web\shop_shop\utils\remove_trailing_whitespaces;
 
 class CSSManagerI extends ClientSideCodeAsset {
 
@@ -24,10 +25,13 @@ class CSSManagerI extends ClientSideCodeAsset {
             <?php foreach( $this->assets as $key => $assetPath ):?>
 
                 <link id="<?=$key?>" rel="stylesheet" href="<?= DIRECTORY_SEPARATOR . $assetPath?>">
-
             <?php endforeach;?>
         <?php
 
-        echo ob_get_clean();
+        $cssAssetFilePath = ob_get_clean();
+
+        remove_trailing_whitespaces( $cssAssetFilePath );
+
+        echo $cssAssetFilePath;
     }
 }

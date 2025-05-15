@@ -5,6 +5,8 @@ namespace learn\web\shop_shop\utils;
 
 use learn\web\shop_shop\models\dbs\DbConfig;
 
+use learn\web\shop_shop\utils\Log;
+
 enum Config  {
 
     case DATABASE;
@@ -16,7 +18,10 @@ enum Config  {
 
         return match( $this ) {
             self::DATABASE => new DbConfig(
-                $_ENV["GYM_STONE_DB_PROVIDER"]?? $_SERVER["GYM_STONE_DB_PROVIDER"]?? getenv("GYM_STONE_DB_PROVIDER")?: "mysql"
+                $_ENV["GYM_STONE_DB_PROVIDER"]
+                ?? $_SERVER["GYM_STONE_DB_PROVIDER"]
+                ?? getenv("GYM_STONE_DB_PROVIDER")
+                ?: "mysql"
             ),
             default => false
         };

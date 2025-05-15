@@ -50,6 +50,8 @@ class HomeView extends View {
 
         $heroIComponent = (new HeroI($this->controller))->render();
 
+        $paramPathSurpise = $this->controller->layout->routeData->param->paramPath->surprise->getOrElse(Status::UNKNOWN->value);
+        
 
 
         // $this->controller->fromHomeCtrl();
@@ -79,12 +81,13 @@ class HomeView extends View {
                 
                 <button id="btn-test-1" type="button">test toast 1</button>
                 <button id="btn-test-2" type="button">test toast 2</button>
+                <button id="btn-test-3" class="center-notif" data-btn type="button">centerd</button>
                 <?php
                 //REM: Don't do this! Imminent Recursion.
                 //REM: [FIXED] .|. Encapsulated.
                 // echo $this->controller->layout->outlet->render()
                 ?>
-                
+                <?php echo "::: " . $paramPathSurpise; ?>
             </div>
         <?php
 

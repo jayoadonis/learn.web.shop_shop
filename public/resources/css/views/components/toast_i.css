@@ -24,9 +24,14 @@
     height: auto;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
     gap: 10px;
     z-index: 2500;
 }
+/* 
+.el-toast-i:hover {
+    opacity: 85%;
+} */
 
 /* Positioning */
 .el-toast-i-container.center {
